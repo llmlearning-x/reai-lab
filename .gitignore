@@ -24,5 +24,6 @@
 # Playwright MCP temporary files
 .playwright-mcp/
 
-# Local-only deployment guides (not for remote)
+# Local-only docs (not for remote)
 DEPLOYMENT-GUIDE.md
+AGENTS.md
