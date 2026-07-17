@@ -466,6 +466,21 @@
   .footer-cn { display: none; } body:not(.theme-tech) .footer-cn { display: block; }
   .footer-tech { display: none; } body.theme-tech .footer-tech { display: block; }
 
+  /* ═══ 返回首页链接 ═══ */
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--accent-dim); text-decoration: underline; }
+  body.theme-tech .back-link { color: #93C5FD; }
+  body.theme-tech .back-link:hover { color: #A78BFA; }
+
   /* ═══ 侧边栏 ═══ */
   .qr-sidebar {
     position: fixed; top: 0; right: -340px; width: 340px; height: 100vh;
@@ -971,11 +986,13 @@
 
   <div class="footer">
     <div class="footer-cn">
+      <p><a href="index.html" class="back-link">← 返回热 AI 实验室</a></p>
       <p>热 AI 实验室 出品</p>
       <p>财联社 / 澎湃新闻 / 太平洋科技报道 · 排名不分先后</p>
       <p style="font-size:14px;color:var(--heading-color);font-weight:600;letter-spacing:3px;margin-top:8px;">二〇二六年七月十七日 · 上海</p>
     </div>
     <div class="footer-tech">
+      <p><a href="index.html" class="back-link">← 返回热 AI 实验室</a></p>
       <p>图片均来自 WAIC 2026 大会组委会</p>
       <p>整理：热 AI 实验室 · 数据来源：财联社 / 澎湃新闻 / 太平洋科技报道</p>
       <p>WAIC 2026 世界人工智能大会 · 排名不分先后 · 2026年7月17日</p>

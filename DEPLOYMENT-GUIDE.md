@@ -17,7 +17,7 @@
 
 - **GitHub 仓库**：https://github.com/llmlearning-x/reai-lab
 - **线上访问地址**：https://reai-lab-ego039ho.edgeone.cool?eo_token=af5907b2c1e137a35c837ca973977624&eo_time=1784255944
-- **WAIC 文章页**：https://reai-lab-ego039ho.edgeone.cool/WAIC2026-十大镇馆之宝.html?eo_token=af5907b2c1e137a35c837ca973977624&eo_time=1784255944
+- **WAIC 文章页**：https://reai-lab-ego039ho.edgeone.cool/waic-2026.html?eo_token=af5907b2c1e137a35c837ca973977624&eo_time=1784255944
 - **控制台**：https://console.cloud.tencent.com/edgeone/makers/project/makers-y18y9ivcrcsy/index
 
 > 注意：线上 URL 中的 `?eo_token=...&eo_time=...` 是 EdgeOne 预览域名鉴权参数，必须完整保留。如需长期稳定公开访问，建议绑定已完成备案的自定义域名。
@@ -29,7 +29,7 @@ reai-lab/
 ├── .gitignore
 ├── README.md
 ├── index.html                    # 门户网站首页
-├── WAIC2026-十大镇馆之宝.html   # 单篇文章页，独立 URL 访问
+├── waic-2026.html               # 单篇文章页，独立 URL 访问
 ├── qr-community.png             # 社区群二维码
 └── qr-contact.png               # 运营负责人二维码
 ```
@@ -54,8 +54,8 @@ cd /Users/fanghua/code/hotai
 git init
 git remote add origin https://github.com/llmlearning-x/reai-lab.git
 
-# 原始文件 WAIC2026-十大镇馆之宝.html 作为单篇文章保留
-cp "WAIC2026-十大镇馆之宝.html" "WAIC2026-十大镇馆之宝.html"
+# 原始文件重命名为 waic-2026.html 作为单篇文章保留
+cp "WAIC2026-十大镇馆之宝.html" waic-2026.html
 
 # 新建 index.html 作为门户首页
 cat > index.html << 'EOF'
@@ -200,7 +200,7 @@ https://reai-lab-xxx.edgeone.cool?eo_token=xxx&eo_time=xxx
 
 ### 2. 首页必须是 `index.html`
 
-EdgeOne Pages 默认以 `index.html` 作为站点入口。如果保持 `WAIC2026-十大镇馆之宝.html` 作为文件名而不创建 `index.html`，访问根路径会展示 README 或 404。
+EdgeOne Pages 默认以 `index.html` 作为站点入口。如果只有 `waic-2026.html` 等单篇文章而不创建 `index.html`，访问根路径会展示 README 或 404。
 
 ### 3. CLI 版本要求
 
