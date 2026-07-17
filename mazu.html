@@ -134,6 +134,25 @@
     font-size: 13px;
     color: var(--text-muted);
   }
+  .hero-visual {
+    margin-top: 32px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  .hero-visual svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .caption {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+  }
 
   .article h2 {
     font-family: var(--font-display);
@@ -170,6 +189,11 @@
     text-underline-offset: 3px;
   }
   .article a:hover { color: var(--text-secondary); }
+  .article sup {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 2px;
+  }
 
   .highlight-box {
     background: var(--bg-card);
@@ -201,6 +225,12 @@
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
   }
+  .feature-card .icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 14px;
+    color: var(--text-primary);
+  }
   .feature-card h4 {
     font-family: var(--font-display);
     font-size: 15px;
@@ -211,6 +241,56 @@
     font-size: 14px;
     color: var(--text-muted);
     margin: 0;
+  }
+
+  .diagram {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin: 32px 0;
+    overflow-x: auto;
+  }
+  .diagram svg {
+    display: block;
+    width: 100%;
+    min-width: 600px;
+    height: auto;
+  }
+  .diagram-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .references {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin: 48px 0 0;
+  }
+  .references h3 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .references ol {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--text-secondary);
+  }
+  .references li {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .references a {
+    color: var(--text-primary);
+    word-break: break-all;
   }
 
   .footer {
@@ -234,6 +314,7 @@
     .container { padding: 32px 20px 60px; }
     .feature-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 32px; }
+    .diagram svg { min-width: 480px; }
   }
 
   .fade-in {
@@ -260,35 +341,151 @@
         <span>2026-07-17</span>
         <span>方案解读</span>
       </div>
+
+      <div class="hero-visual">
+        <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="720" height="240" fill="var(--bg-secondary)"/>
+          <!-- 雷达网格 -->
+          <g stroke="var(--border)" fill="none" stroke-width="1">
+            <circle cx="360" cy="120" r="30"/>
+            <circle cx="360" cy="120" r="60"/>
+            <circle cx="360" cy="120" r="90"/>
+            <circle cx="360" cy="120" r="120"/>
+            <line x1="360" y1="0" x2="360" y2="240"/>
+            <line x1="240" y1="120" x2="480" y2="120"/>
+          </g>
+          <!-- 雷达扫描线 -->
+          <line x1="360" y1="120" x2="470" y2="40" stroke="var(--text-primary)" stroke-width="1" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" from="0 360 120" to="360 360 120" dur="8s" repeatCount="indefinite"/>
+          </line>
+          <!-- 降雨回波 -->
+          <g opacity="0.7">
+            <path d="M 420 90 Q 450 70 470 100 T 510 110" stroke="none" fill="url(#rainLight)"/>
+            <circle cx="440" cy="95" r="25" fill="url(#rainLight)"/>
+            <circle cx="480" cy="110" r="35" fill="url(#rainHeavy)"/>
+            <circle cx="520" cy="130" r="28" fill="url(#rainHeavy)"/>
+          </g>
+          <!-- 城市点 -->
+          <g fill="var(--text-primary)">
+            <circle cx="280" cy="160" r="2"/>
+            <circle cx="310" cy="170" r="2"/>
+            <circle cx="340" cy="155" r="2"/>
+            <circle cx="400" cy="175" r="2"/>
+            <circle cx="430" cy="165" r="2"/>
+          </g>
+          <defs>
+            <radialGradient id="rainLight" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#60A5FA" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="rainHeavy" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+        </svg>
+        <div class="caption">图 1：妈祖方案可视化概念——雷达回波与城市风险点叠加</div>
+      </div>
     </header>
 
     <article class="article">
       <h2>为什么叫「妈祖」</h2>
       <p>妈祖是海洋文化中的守护女神，象征预警、庇护与平安。我们将这套气象智能预警方案命名为「妈祖」，寓意以科技之力，为城市、乡村、港口、交通、能源等关键场景提供全天候的气象守护。</p>
-      <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。</p>
+      <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。<sup>[1]</sup></p>
 
       <h2>核心能力</h2>
       <div class="feature-grid">
         <div class="feature-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
           <h4>分钟级预测</h4>
           <p>基于雷达回波外推与深度学习，实现未来 0–2 小时逐分钟降水、风场、雷暴预测。</p>
         </div>
         <div class="feature-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.74 5.88-5.74 5.88-5.74-5.88z"/>
+            <path d="M12 8.45l5.74 5.88-5.74 5.88-5.74-5.88z" opacity="0.5"/>
+          </svg>
           <h4>公里级网格</h4>
           <p>空间分辨率精细到 1km×1km，覆盖城市街区、山区、沿海、高速公路等微观场景。</p>
         </div>
         <div class="feature-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
           <h4>多源融合</h4>
           <p>整合气象卫星、多普勒雷达、自动站、数值模式、社交媒体与物联网传感器。</p>
         </div>
         <div class="feature-card">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
           <h4>场景化预警</h4>
           <p>面向城市内涝、山洪、航运、航空、电网、体育赛事等场景生成定制化风险等级。</p>
         </div>
       </div>
 
       <h2>技术架构</h2>
-      <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐：</p>
+      <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐。其设计参考了主流 AI 气象预报模型在数据融合、时空建模和不确定性量化方面的最新进展。<sup>[2][3]</sup></p>
+
+      <div class="diagram">
+        <div class="diagram-title">图 2：妈祖技术架构</div>
+        <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="boxGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="var(--bg-card-hover)" stop-opacity="1"/>
+              <stop offset="100%" stop-color="var(--bg-card)" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <!-- 数据层 -->
+          <rect x="20" y="20" width="140" height="80" rx="12" fill="url(#boxGrad)" stroke="var(--border)"/>
+          <text x="90" y="48" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="700">数据层</text>
+          <text x="90" y="68" text-anchor="middle" fill="var(--text-secondary)" font-size="10">卫星/雷达/自动站/IoT</text>
+          <text x="90" y="84" text-anchor="middle" fill="var(--text-muted)" font-size="10">数值模式/社交媒体</text>
+
+          <!-- 融合层 -->
+          <rect x="190" y="20" width="140" height="80" rx="12" fill="url(#boxGrad)" stroke="var(--border)"/>
+          <text x="260" y="48" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="700">融合层</text>
+          <text x="260" y="68" text-anchor="middle" fill="var(--text-secondary)" font-size="10">多模态大模型</text>
+          <text x="260" y="84" text-anchor="middle" fill="var(--text-muted)" font-size="10">时空对齐/数据纠错</text>
+
+          <!-- 推理层 -->
+          <rect x="360" y="20" width="140" height="80" rx="12" fill="url(#boxGrad)" stroke="var(--border)"/>
+          <text x="430" y="48" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="700">推理层</text>
+          <text x="430" y="68" text-anchor="middle" fill="var(--text-secondary)" font-size="10">时空图神经网络</text>
+          <text x="430" y="84" text-anchor="middle" fill="var(--text-muted)" font-size="10">概率预报/风险量化</text>
+
+          <!-- 应用层 -->
+          <rect x="530" y="20" width="140" height="80" rx="12" fill="url(#boxGrad)" stroke="var(--border)"/>
+          <text x="600" y="48" text-anchor="middle" fill="var(--text-primary)" font-size="13" font-weight="700">应用层</text>
+          <text x="600" y="68" text-anchor="middle" fill="var(--text-secondary)" font-size="10">API/短信/大屏/App</text>
+          <text x="600" y="84" text-anchor="middle" fill="var(--text-muted)" font-size="10">场景化预警/应急联动</text>
+
+          <!-- 箭头 -->
+          <g stroke="var(--text-muted)" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+            <path d="M160 60 L190 60"/>
+            <path d="M330 60 L360 60"/>
+            <path d="M500 60 L530 60"/>
+          </g>
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="var(--text-muted)"/>
+            </marker>
+          </defs>
+
+          <!-- 反馈环 -->
+          <path d="M600 100 L600 180 L80 180 L80 100" stroke="var(--border)" stroke-width="1.5" fill="none" stroke-dasharray="6 4"/>
+          <text x="340" y="200" text-anchor="middle" fill="var(--text-muted)" font-size="11">真实灾害反馈 → 模型持续优化</text>
+        </svg>
+      </div>
+
       <ol>
         <li><strong>数据层</strong>：实时接入卫星、雷达、地面观测、数值预报、行业 IoT 等多源数据，统一时空基准。</li>
         <li><strong>融合层</strong>：利用多模态大模型对异构数据进行融合纠错，生成高分辨率三维气象场。</li>
@@ -303,7 +500,7 @@
 
       <h2>典型应用场景</h2>
       <ul>
-        <li><strong>城市防汛</strong>：提前 1–2 小时锁定内涝风险点，联动排水、交管、应急部门。</li>
+        <li><strong>城市防汛</strong>：提前 1–2 小时锁定内涝风险点，联动排水、交管、应急部门。<sup>[4]</sup></li>
         <li><strong>海上航运</strong>：为港口调度、渔船回港、航线规划提供台风与强对流路径预测。</li>
         <li><strong>能源保供</strong>：预测光伏、风电出力波动，辅助电网调度与储能策略。</li>
         <li><strong>大型活动</strong>：为马拉松、演唱会、户外赛事提供逐小时风险窗口建议。</li>
@@ -311,6 +508,17 @@
 
       <h2>未来展望</h2>
       <p>妈祖方案将持续迭代，目标从「预警」走向「预演」：在灾害发生前，结合数字孪生城市模拟不同处置策略的效果，为决策者提供「如果这样，会怎样」的推演能力。最终让每一次预警都能转化为一次有效的行动，最大限度减少生命与财产损失。</p>
+
+      <div class="references">
+        <h3>参考资料</h3>
+        <ol>
+          <li>中国气象局. 全国气象大数据云平台「天擎」. https://www.cma.gov.cn/</li>
+          <li>European Centre for Medium-Range Weather Forecasts (ECMWF). Numerical Weather Prediction and Data Assimilation. https://www.ecmwf.int/</li>
+          <li>Google DeepMind. GraphCast: Learning skillful medium-range global weather forecasting. https://deepmind.google/discover/blog/graphcast-ai-model-for-faster-and-more-accurate-global-weather-forecasting/</li>
+          <li>Huawei Cloud. Pangu-Weather: A 3D high-resolution model for fast and accurate weather forecasting. https://www.huaweicloud.com/product/pangu-models/pangu-weather.html</li>
+          <li>国家气象信息中心. 气象数据服务. https://data.cma.cn/</li>
+        </ol>
+      </div>
     </article>
 
     <footer class="footer">
