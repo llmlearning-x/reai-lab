@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人工智能合作发展行动计划 · 交互式政策解读</title>
+<style>
+/* ============================================================
+   黑白水墨 · 山水田园 —— V2 视觉系统
+   宣纸白 #F4F1EA / 墨阶五色：浓墨 #191713 · 重墨 #3B3833 ·
+   中墨 #6E6A61 · 淡墨 #A9A499 · 清墨 #D9D4C7
+   唯一彩色：印章朱砂 #A63326（仅印章与极个别点睛）
+   ============================================================ */
+:root{
+  --paper:#F4F1EA;
+  --paper-hi:#FBF8F1;
+  --night:#14120F;
+  --ink-1:#191713;
+  --ink-2:#3B3833;
+  --ink-3:#6E6A61;
+  --ink-4:#A9A499;
+  --ink-5:#D9D4C7;
+  --seal:#A63326;
+  --seal-bright:#C8513F;  /* 深底区亮红 */
+  --l-found:#191713;  /* 筑基 · 浓墨（厚） */
+  --l-emp:#6E6A61;    /* 赋能 · 中墨 */
+  --l-gov:#A9A499;    /* 共治 · 淡墨（远山淡影） */
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background-color:var(--paper);
+  /* 极淡纸纹：内联 SVG 噪点，零外部请求 */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  color:var(--ink-2);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.85;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:rgba(25,23,19,.16)}
+a{color:var(--ink-1);text-decoration:none;border-bottom:1px solid rgba(25,23,19,.32);transition:border-color .25s,color .25s}
+a:hover{border-bottom-color:var(--ink-1)}
+img{display:block}
+svg{display:block}
+button{font:inherit;background:none;border:0;cursor:pointer;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+.narrow{max-width:740px;margin:0 auto}
+section{position:relative}
+:focus-visible{outline:2px solid var(--ink-3);outline-offset:3px}
+
+/* ---------- 顶部阅读进度条（朱砂点睛） ---------- */
+.progress-bar{
+  position:fixed;top:0;left:0;z-index:1000;
+  width:100%;height:2px;
+  background:var(--seal);
+  transform:scaleX(0);transform-origin:0 50%;
+  will-change:transform;
+}
+
+/* ---------- 右侧圆点导航 ---------- */
+.dot-nav{
+  position:fixed;right:26px;top:50%;transform:translateY(-50%);
+  z-index:900;display:flex;flex-direction:column;gap:18px;
+}
+.dot-nav a{position:relative;display:flex;align-items:center;justify-content:center;width:14px;height:14px;border-bottom:0}
+.dot-nav .dot{
+  width:9px;height:9px;border-radius:50%;
+  border:1.5px solid var(--ink-4);
+  background:transparent;
+  transition:background .3s,border-color .3s,transform .3s;
+}
+.dot-nav a.active .dot{background:var(--seal);border-color:var(--seal);transform:scale(1.4)}
+.dot-nav .tip{
+  position:absolute;right:24px;top:50%;
+  transform:translateY(-50%) translateX(6px);
+  background:var(--ink-1);color:var(--paper);
+  font-size:12px;letter-spacing:.15em;line-height:1;
+  padding:7px 12px 6px;border-radius:2px;
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+}
+.dot-nav .tip::after{
+  content:"";position:absolute;left:100%;top:50%;transform:translateY(-50%);
+  border:4px solid transparent;border-left-color:var(--ink-1);
+}
+.dot-nav a:hover .tip{opacity:1;transform:translateY(-50%) translateX(0)}
+.dot-nav a:hover .dot{border-color:var(--seal)}
+
+/* ---------- 进入视口渐显 ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s);will-change:opacity,transform}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ---------- 章节通用 ---------- */
+.section{padding:140px 0}
+.kicker{
+  display:flex;align-items:center;gap:14px;
+  font-size:13px;letter-spacing:.32em;color:var(--seal);
+  margin-bottom:24px;text-transform:uppercase;
+}
+.kicker .no{font-family:var(--serif);color:var(--seal);letter-spacing:.1em}
+.kicker::before{content:"";width:34px;height:1px;background:var(--seal)}
+.sec-title{
+  font-family:var(--serif);font-weight:700;color:var(--seal);
+  font-size:clamp(28px,4vw,42px);line-height:1.35;letter-spacing:.04em;
+  margin-bottom:18px;
+}
+.sec-sub{color:var(--ink-3);font-size:16px;letter-spacing:.06em;margin-bottom:60px}
+
+/* ---------- 区块分隔：SVG 手绘远山淡影 / 大笔触飞白墨痕 ---------- */
+.ink-divider{height:110px;overflow:hidden}
+.ink-divider svg{width:100%;height:100%}
+.ink-divider.flip svg{transform:scaleX(-1)}
+.ink-brush{max-width:1120px;margin:0 auto;padding:0 32px;height:44px}
+.ink-brush svg{width:100%;height:100%}
+
+/* ---------- Section 1 · Hero（ink-hero 全幅铺底） ---------- */
+.hero{
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center bottom;  /* 群峰云雾压底部 */
+  filter:grayscale(1) contrast(1.05);
+  mix-blend-mode:multiply;  /* 白底透明化，融入宣纸 */
+  opacity:.94;
+}
+.hero::before{ /* 顶部宣纸白渐变遮罩过渡 */
+  content:"";position:absolute;left:0;right:0;top:0;height:42%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,var(--paper) 0%,rgba(244,241,234,.72) 34%,rgba(244,241,234,0) 100%);
+}
+.hero::after{ /* 底部渐隐入纸 */
+  content:"";position:absolute;left:0;right:0;bottom:0;height:210px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(244,241,234,0),var(--paper) 88%);
+}
+.hero-inner{position:relative;z-index:2;padding-top:40px}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:13px;letter-spacing:.34em;color:var(--seal);
+  border:1px solid rgba(166,51,38,.55);padding:8px 18px 7px;border-radius:2px;
+  background:rgba(251,248,241,.55);
+  margin-bottom:46px;
+}
+.hero-tag::before{content:"";width:7px;height:7px;background:var(--seal);border-radius:1px;transform:rotate(45deg)}
+.hero-title{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(46px,8.6vw,110px);
+  line-height:1.16;letter-spacing:.05em;
+  color:var(--ink-1);
+}
+.hero-title span{display:block}
+.hero-title .accent{
+  display:inline-block;
+  color:var(--seal);
+  background-image:linear-gradient(transparent 82%,rgba(166,51,38,.3) 82%,rgba(166,51,38,.3) 96%,transparent 96%); /* 朱砂笔触衬 */
+}
+.hero-sub{
+  font-family:var(--serif);
+  font-size:clamp(17px,2.2vw,24px);letter-spacing:.1em;line-height:1.9;
+  margin-top:40px;color:var(--ink-1);
+}
+.hero-sub em{font-style:normal;color:var(--seal);border-bottom:1px solid rgba(166,51,38,.5);padding-bottom:2px}
+.hero-meta{
+  margin-top:28px;font-size:13.5px;color:var(--ink-3);letter-spacing:.08em;line-height:2.05;
+  max-width:640px;
+}
+.hero-deco{
+  position:absolute;right:6vw;top:50%;transform:translateY(-54%);
+  z-index:2;display:flex;align-items:center;gap:34px;
+}
+.vertical-note{
+  writing-mode:vertical-rl;
+  font-family:var(--serif);font-size:15px;letter-spacing:.5em;
+  color:var(--ink-3);
+  border-right:1px solid var(--ink-5);padding-right:16px;
+  height:240px;
+}
+.scroll-cue{
+  position:absolute;left:50%;bottom:36px;transform:translateX(-50%);
+  z-index:3;border:0;display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--ink-3);font-size:11px;letter-spacing:.4em;
+}
+.scroll-cue svg{animation:breath 2.4s ease-in-out infinite}
+@keyframes breath{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(9px);opacity:1}}
+</style>
+<style>
+/* ---------- Section 2 · 政策速览 ---------- */
+.intro-text{
+  font-size:18.5px;line-height:2.05;color:var(--ink-2);
+  text-align:justify;
+}
+.intro-text strong{font-weight:600;color:var(--ink-1)}
+/* ink-pastoral 卷轴装裱横幅（细墨线外框 + 上下留白边，仿立轴裱褙） */
+.scroll-mount{
+  position:relative;margin:70px auto 0;max-width:960px;
+  background:var(--paper-hi);
+  border:1px solid var(--ink-4);
+  padding:44px 28px 26px;
+}
+.scroll-mount::before{ /* 装裱内框细线 */
+  content:"";position:absolute;inset:10px;border:1px solid var(--ink-5);pointer-events:none;
+}
+.scroll-mount img{
+  width:100%;height:auto;
+  filter:grayscale(1) contrast(1.04);
+  mix-blend-mode:multiply;
+}
+.scroll-mount figcaption{
+  margin-top:24px;text-align:center;
+  font-family:var(--serif);font-size:12.5px;letter-spacing:.26em;color:var(--ink-3);
+}
+.scroll-mount .rod{ /* 天杆 / 地杆 */
+  position:absolute;left:-9px;right:-9px;height:7px;
+  background:var(--ink-1);border-radius:3px;
+}
+.scroll-mount .rod::before,.scroll-mount .rod::after{
+  content:"";position:absolute;top:50%;width:13px;height:13px;
+  background:var(--ink-1);border-radius:50%;transform:translateY(-50%);
+}
+.scroll-mount .rod::before{left:-5px}
+.scroll-mount .rod::after{right:-5px}
+.scroll-mount .rod-t{top:-4px}
+.scroll-mount .rod-b{bottom:-4px}
+.info-cards{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;
+  margin:60px 0;max-width:780px;
+}
+.info-card{
+  border:1px solid var(--ink-5);border-radius:4px;
+  background:var(--paper-hi);
+  padding:28px 26px 24px;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.info-card:hover{border-color:rgba(25,23,19,.5);transform:translateY(-3px);box-shadow:0 10px 26px -18px rgba(25,23,19,.4)}
+.info-card .ic-label{
+  font-size:12px;letter-spacing:.3em;color:var(--seal);
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+}
+.info-card .ic-label::before{content:"";width:16px;height:1px;background:var(--seal)}
+.info-card .ic-value{font-family:var(--serif);font-size:19px;line-height:1.6;letter-spacing:.03em;color:var(--ink-1)}
+.info-card .ic-value small{display:block;font-family:var(--sans);font-size:13px;color:var(--ink-3);margin-top:6px;letter-spacing:.05em}
+.position-quote{
+  border-left:3px solid var(--seal);
+  padding:6px 0 6px 26px;
+  font-family:var(--serif);font-size:19px;line-height:2.05;letter-spacing:.03em;
+  color:var(--seal);
+}
+
+/* ---------- Section 3 · 政策脉络（手绘墨线时间轴） ---------- */
+.timeline{position:relative;margin-top:76px}
+.timeline-track{position:absolute;left:6%;right:6%;top:1px;height:25px}
+.timeline-track svg{width:100%;height:100%}
+.timeline-track .tk-v{display:none}
+.timeline-nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+.t-node{position:relative;text-align:center;padding-top:48px}
+.t-dot{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:27px;height:27px;border-radius:50%;
+  border:1.5px solid var(--ink-3);background:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s,transform .3s;
+}
+.t-dot::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--ink-3);transition:background .3s,transform .3s}
+.t-node:hover .t-dot{transform:translateX(-50%) scale(1.12);border-color:var(--ink-1)}
+.t-node:hover .t-dot::after{background:var(--ink-1)}
+.t-card{
+  border:1px solid var(--ink-5);border-radius:4px;background:var(--paper-hi);
+  padding:30px 26px 26px;text-align:left;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+  cursor:pointer;width:100%;display:block;
+}
+.t-node:hover .t-card,.t-card:focus-visible{border-color:rgba(25,23,19,.45);transform:translateY(-3px);box-shadow:0 12px 30px -20px rgba(25,23,19,.4)}
+.t-date{font-family:var(--serif);font-size:15px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:10px}
+.t-name{font-family:var(--serif);font-size:18.5px;line-height:1.6;letter-spacing:.02em;margin-bottom:10px;color:var(--ink-1)}
+.t-desc{font-size:14px;color:var(--ink-3);line-height:1.9}
+.t-note{
+  display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1);
+}
+.t-note>span{display:block;overflow:hidden;min-height:0}
+.t-note p{
+  margin-top:14px;padding-top:12px;border-top:1px dashed var(--ink-5);
+  font-size:13.5px;color:var(--ink-2);line-height:1.9;
+}
+.t-note p b{color:var(--ink-1);font-weight:600}
+.t-node.open .t-note{grid-template-rows:1fr}
+@media (hover:hover){.t-node:hover .t-note{grid-template-rows:1fr}}
+.t-hint{font-size:12px;color:var(--ink-3);letter-spacing:.2em;text-align:center;margin-top:34px}
+/* 当前节点：朱砂高亮 + 朱砂印章 */
+.t-node.current .t-dot{width:37px;height:37px;border-color:var(--seal)}
+.t-node.current .t-dot::after{background:var(--seal);width:13px;height:13px}
+.t-node.current .t-card{border-color:var(--seal);box-shadow:0 14px 34px -20px rgba(166,51,38,.5)}
+.t-node.current .t-date{color:var(--seal)}
+.t-node.current .t-name{color:var(--seal)}
+.t-node.current{transform:scale(1.03)}
+.t-stamp{
+  position:absolute;top:-16px;right:-10px;width:56px;height:56px;
+  transform:rotate(-8deg);pointer-events:none;
+}
+
+/* ---------- Section 4 · 数据速览（深墨夜色 + 墨竹侧饰） ---------- */
+.dark{background:var(--night);color:rgba(244,241,234,.78)}
+.dark .kicker{color:var(--seal-bright)}
+.dark .kicker .no{color:var(--seal-bright)}
+.dark .kicker::before{background:var(--seal-bright)}
+.dark .sec-title{color:var(--seal-bright)}
+.dark .sec-sub{color:rgba(244,241,234,.5)}
+.data-bamboo{ /* 右侧墨竹：反色为夜色竹影，低透明度意境 */
+  position:absolute;top:0;bottom:0;left:52%;right:0;
+  overflow:hidden;pointer-events:none;z-index:1;
+}
+.data-bamboo img{
+  width:100%;height:100%;object-fit:cover;object-position:32% 50%;
+  filter:grayscale(1) invert(1) contrast(1.1);
+  opacity:.18;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 42%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 42%);
+}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:24px}
+.stat{
+  border:1px solid rgba(169,164,153,.24);border-radius:4px;
+  padding:38px 30px 32px;
+  background:rgba(244,241,234,.03);
+  transition:border-color .3s,transform .3s,background .3s;
+}
+.stat:hover{border-color:rgba(217,212,199,.5);transform:translateY(-3px);background:rgba(244,241,234,.05)}
+.stat-num{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(40px,4.6vw,58px);line-height:1.1;
+  color:#F4F1EA;letter-spacing:.02em;
+  display:flex;align-items:baseline;flex-wrap:wrap;
+}
+.stat-num .cv{color:var(--seal-bright)}
+.stat-num .cs{font-size:.52em;margin-left:2px;color:var(--ink-5)}
+.stat-unit{font-family:var(--serif);font-size:17px;color:rgba(244,241,234,.7);margin-left:8px;letter-spacing:.1em}
+.stat-label{
+  margin-top:14px;font-size:14px;line-height:1.9;color:rgba(244,241,234,.68);
+  border-top:1px solid rgba(169,164,153,.2);padding-top:14px;
+}
+.stat-label b{color:#F4F1EA;font-weight:600}
+.src-note{margin-top:42px;font-size:12.5px;color:rgba(244,241,234,.4);letter-spacing:.06em}
+</style>
+<style>
+/* ---------- Section 5 · 八大行动 ---------- */
+.arch-wrap{margin:14px 0 30px}
+.arch-svg{width:100%;height:auto}
+.arch-svg text{user-select:none}
+.arch-layer{cursor:pointer;outline:none;transition:opacity .35s}
+.arch-layer .band{transition:fill .3s,fill-opacity .3s,stroke-width .3s}
+.arch-layer text{transition:fill .3s}
+.arch-layer .l-title{transition:letter-spacing .3s,fill .3s}
+/* 悬停/选中：墨色加深 + 宣纸白字对比 */
+.arch-layer:hover .band,.arch-layer:focus-visible .band,.arch-layer.active .band{fill-opacity:1;stroke-width:2.6}
+.arch-layer[data-layer="govern"]:hover .band,.arch-layer[data-layer="govern"]:focus-visible .band,.arch-layer[data-layer="govern"].active .band{fill:#6E6A61;stroke:#6E6A61}
+.arch-layer[data-layer="empower"]:hover .band,.arch-layer[data-layer="empower"]:focus-visible .band,.arch-layer[data-layer="empower"].active .band{fill:#3B3833;stroke:#3B3833}
+.arch-layer[data-layer="foundation"]:hover .band,.arch-layer[data-layer="foundation"]:focus-visible .band,.arch-layer[data-layer="foundation"].active .band{fill:#000000;stroke:#000000}
+.arch-layer:hover text,.arch-layer:focus-visible text,.arch-layer.active text{fill:#F4F1EA}
+.arch-svg.dimmed .arch-layer:not(.active){opacity:.3}
+.arch-caption{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--ink-5);
+}
+.arch-caption .order{font-size:13px;color:var(--ink-3);letter-spacing:.14em}
+.arch-caption .order b{font-family:var(--serif);font-weight:600}
+.filter-pills{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-pills .fp-label{font-size:12px;letter-spacing:.24em;color:var(--ink-3);margin-right:4px}
+.fp{
+  font-size:13px;letter-spacing:.12em;
+  border:1px solid var(--ink-5);border-radius:999px;
+  padding:7px 18px 6px;color:var(--ink-3);
+  transition:all .25s;
+}
+.fp:hover{border-color:currentColor}
+.fp[data-layer="foundation"]:hover,.fp[data-layer="foundation"].active{color:var(--seal);border-color:var(--seal)}
+.fp[data-layer="foundation"].active{background:rgba(166,51,38,.08)}
+.fp[data-layer="empower"]:hover,.fp[data-layer="empower"].active{color:var(--seal);border-color:var(--seal)}
+.fp[data-layer="empower"].active{background:rgba(166,51,38,.08)}
+.fp[data-layer="govern"]:hover,.fp[data-layer="govern"].active{color:var(--seal);border-color:var(--seal)}
+.fp[data-layer="govern"].active{background:rgba(166,51,38,.08)}
+.fp[data-layer="all"]:hover,.fp[data-layer="all"].active{color:var(--seal);border-color:var(--seal)}
+.fp[data-layer="all"].active{background:rgba(166,51,38,.08)}
+
+/* ---------- 行动卡片（手风琴） ---------- */
+.cards{margin-top:48px;display:flex;flex-direction:column;gap:18px}
+.card{
+  --lc:var(--ink-1);
+  --lct:var(--paper);
+  border:1px solid var(--ink-5);border-radius:4px;background:var(--paper-hi);
+  transition:border-color .3s,box-shadow .3s,opacity .35s,filter .35s,transform .3s;
+}
+.card:hover{border-color:rgba(25,23,19,.35)}
+.card.open{border-color:var(--lc);box-shadow:0 16px 40px -26px rgba(25,23,19,.45)}
+.card.dim{opacity:.3;filter:grayscale(.6)}
+.card.hit{border-color:var(--lc);box-shadow:0 0 0 1px var(--lc),0 14px 34px -24px rgba(25,23,19,.45);transform:translateY(-2px)}
+.card-head{
+  width:100%;display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;gap:8px 26px;
+  padding:28px 32px;text-align:left;
+}
+/* 壹—捌：方形墨章小印 */
+.card-num{
+  width:clamp(50px,5.4vw,62px);height:clamp(50px,5.4vw,62px);flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--lc);color:var(--lct);
+  font-family:var(--serif);font-weight:700;font-size:clamp(22px,2.4vw,27px);line-height:1;
+  border-radius:5px;transform:rotate(-3deg);
+  box-shadow:inset 0 0 0 3px var(--lc),inset 0 0 0 4.5px currentColor;
+}
+.card-head-main{min-width:0}
+.card-title-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.card-name{font-family:var(--serif);font-size:clamp(19px,2.2vw,24px);font-weight:700;letter-spacing:.04em;color:var(--seal)}
+.layer-pill{
+  font-size:11.5px;letter-spacing:.18em;line-height:1;
+  color:var(--ink-2);border:1px solid var(--lc);border-radius:999px;
+  padding:5px 12px 4px;opacity:.9;white-space:nowrap;
+}
+.card-summary{font-size:14px;color:var(--ink-3);margin-top:9px;letter-spacing:.03em}
+.card-chev{
+  width:34px;height:34px;border:1px solid var(--ink-5);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex:none;
+  transition:transform .45s cubic-bezier(.4,0,.2,1),border-color .3s,background .3s;
+}
+.card.open .card-chev{transform:rotate(180deg);border-color:var(--lc);background:rgba(25,23,19,.04)}
+.card-chev svg{stroke:var(--ink-3);transition:stroke .3s}
+.card.open .card-chev svg{stroke:var(--lc)}
+.card-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.4,0,.2,1)}
+.card-body>div{overflow:hidden;min-height:0}
+.card.open .card-body{grid-template-rows:1fr}
+.card-body-inner{
+  padding:4px 32px 36px;
+  display:grid;grid-template-columns:1.05fr 1fr;gap:30px;
+  border-top:1px dashed var(--ink-5);margin:0 32px;padding-left:0;padding-right:0;
+}
+.cb-col .cb-label{
+  font-size:12px;letter-spacing:.3em;color:var(--seal);
+  display:flex;align-items:center;gap:10px;margin:24px 0 12px;
+}
+.cb-col .cb-label::before{content:"";width:14px;height:1px;background:var(--seal)}
+.cb-quote{
+  border-left:3px solid var(--lc);
+  background:rgba(25,23,19,.03);
+  padding:16px 20px;border-radius:0 3px 3px 0;
+  font-size:14.5px;line-height:2.05;color:var(--ink-1);
+}
+.cb-read{font-size:14.5px;line-height:2.05;color:var(--ink-2);text-align:justify}
+.kw-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px}
+.kw{
+  font-size:12.5px;letter-spacing:.08em;line-height:1;
+  border:1px solid rgba(166,51,38,.6);border-radius:999px;padding:7px 14px 6px;
+  color:var(--seal);background:rgba(251,248,241,.6);
+}
+.hl{
+  margin-top:22px;display:flex;gap:10px;align-items:flex-start;
+  font-size:14px;line-height:1.9;color:var(--seal);
+}
+.hl b{
+  flex:none;font-family:var(--serif);font-weight:700;color:var(--seal);
+  font-size:13px;letter-spacing:.2em;margin-top:2px;
+}
+.hl b::after{content:"／";color:rgba(166,51,38,.45);margin-left:8px;font-weight:400}
+
+/* ---------- Section 6 · 金句（ink-scroll 夜色长卷） ---------- */
+.quote-sec{text-align:center;background:var(--night);overflow:hidden}
+.quote-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center center;
+  filter:grayscale(1) contrast(1.06);
+  opacity:.25;  /* 压低不透明度 */
+}
+.quote-sec::before{ /* 深墨渐变遮罩 */
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,18,15,.94) 0%,rgba(20,18,15,.55) 46%,rgba(20,18,15,.62) 62%,rgba(20,18,15,.95) 100%);
+}
+.quote-lines{margin:34px 0 44px}
+.quote-line{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(24px,4.2vw,44px);line-height:1.75;letter-spacing:.08em;
+  color:rgba(244,241,234,.5);
+}
+.quote-line .ql-red{color:var(--seal-bright)}
+.quote-line em{font-style:normal;color:#F4F1EA}          /* 筑基 · 最亮 */
+.quote-line em.c{color:rgba(244,241,234,.78)}             /* 赋能 · 次亮 */
+.quote-line em.t{color:rgba(244,241,234,.62)}             /* 共治 · 淡远 */
+.quote-sub{
+  font-size:15px;letter-spacing:.14em;color:rgba(244,241,234,.55);line-height:2.1;
+}
+.quote-sub::before,.quote-sub::after{
+  content:"";display:inline-block;width:44px;height:1px;background:rgba(244,241,234,.3);
+  vertical-align:middle;margin:0 18px;
+}
+
+/* ---------- Section 7 · 页脚（墨竹装裱小框 + 来源） ---------- */
+.footer{padding:100px 0 76px;border-top:1px solid var(--ink-5)}
+.footer-grid{display:grid;grid-template-columns:minmax(230px,300px) 1fr;gap:48px;max-width:960px;margin:0 auto;align-items:start}
+.f-bamboo{
+  border:1px solid var(--ink-4);background:var(--paper-hi);
+  padding:12px 12px 10px;position:relative;
+}
+.f-bamboo::before{content:"";position:absolute;inset:5px;border:1px solid var(--ink-5);pointer-events:none}
+.f-bamboo img{
+  width:100%;height:auto;position:relative;z-index:1;
+  filter:grayscale(1) contrast(1.04);
+  mix-blend-mode:multiply;
+}
+.f-bamboo figcaption{
+  margin-top:10px;text-align:center;position:relative;z-index:1;
+  font-family:var(--serif);font-size:12px;letter-spacing:.3em;color:var(--ink-3);
+}
+.f-right{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.f-item .f-label{font-size:12px;letter-spacing:.3em;color:var(--seal);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.f-item .f-label::before{content:"";width:14px;height:1px;background:var(--seal)}
+.f-item a{color:var(--seal);border-bottom-color:rgba(166,51,38,.45)}
+.f-item p{font-size:14px;line-height:2.05;color:var(--ink-2)}
+.f-declare{
+  margin-top:56px;text-align:center;font-size:12.5px;color:var(--ink-3);letter-spacing:.1em;line-height:2;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1023px){
+  .section{padding:104px 0}
+  .hero-deco{right:4vw;gap:22px;opacity:.94}
+  .vertical-note{display:none}
+}
+@media (max-width:768px){
+  .dot-nav{display:none}
+  .wrap{padding:0 22px}
+  .section{padding:84px 0}
+  .hero{min-height:92vh}
+  .hero-deco{position:static;transform:none;margin-top:48px;justify-content:flex-start}
+  .scroll-mount{margin-top:52px;padding:30px 16px 18px}
+  .scroll-mount .rod{left:-5px;right:-5px;height:5px}
+  .ink-divider{height:72px}
+  .info-cards{grid-template-columns:1fr}
+  /* 时间轴转纵向（手绘墨线随之转向） */
+  .timeline-track{left:1px;right:auto;top:2%;bottom:2%;width:25px;height:auto}
+  .timeline-track .tk-h{display:none}
+  .timeline-track .tk-v{display:block}
+  .timeline-nodes{grid-template-columns:1fr;gap:30px}
+  .t-node{padding-top:0;padding-left:52px;text-align:left}
+  .t-dot{left:0;top:4px;transform:none}
+  .t-node:hover .t-dot{transform:scale(1.12)}
+  .t-node.current{transform:none}
+  .t-stamp{width:46px;height:46px;top:-12px;right:-6px}
+  /* 数据卡单列；墨竹侧饰隐去 */
+  .stats-grid{grid-template-columns:1fr}
+  .data-bamboo{display:none}
+  /* 卡片头 */
+  .card-head{grid-template-columns:auto 1fr auto;gap:4px 14px;padding:22px 18px}
+  .card-chev{width:28px;height:28px}
+  .card-body-inner{grid-template-columns:1fr;padding:4px 20px 30px;margin:0 20px}
+  .footer-grid{grid-template-columns:1fr;gap:40px}
+  .f-right{grid-template-columns:1fr;gap:30px}
+  .f-bamboo{max-width:300px}
+  .quote-sub::before,.quote-sub::after{width:24px;margin:0 10px}
+}
+
+/* ---------- 动效兜底 ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .card-body,.t-note{transition:none!important}
+}
+</style>
+
+<style>
+/* ---------- 社区二维码：底部区块 + 侧边悬浮 ---------- */
+.qr-block{margin-top:60px;padding-top:42px;border-top:1px dashed var(--ink-5);text-align:center}
+.qr-heading{display:flex;align-items:center;justify-content:center;gap:14px;
+  font-size:13px;letter-spacing:.32em;color:var(--seal)}
+.qr-heading::before,.qr-heading::after{content:"";width:34px;height:1px;background:var(--seal)}
+.qr-cards{display:flex;gap:34px;justify-content:center;align-items:flex-start;flex-wrap:wrap;margin-top:30px}
+.qr-card{margin:0}
+.qr-frame{
+  border:1px solid var(--ink-4);background:var(--paper-hi);padding:10px;position:relative;
+  height:286px;display:flex;align-items:center;justify-content:center;
+  transition:transform .3s,box-shadow .3s;
+}
+.qr-frame::before{content:"";position:absolute;inset:4px;border:1px solid var(--ink-5);pointer-events:none}
+.qr-frame:hover{transform:translateY(-3px);box-shadow:0 12px 28px -18px rgba(25,23,19,.45)}
+.qr-frame img{position:relative;z-index:1;display:block}
+.qr-community-img{height:262px;width:auto}
+.qr-contact-img{width:198px;height:198px}
+.qr-card figcaption{margin-top:12px;text-align:center;font-family:var(--serif);font-size:15px;letter-spacing:.14em;color:var(--seal)}
+.qr-card figcaption small{display:block;font-family:var(--sans);font-size:12px;color:var(--ink-3);margin-top:5px;letter-spacing:.05em}
+
+.qr-side{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:900;display:flex;align-items:center}
+.qr-side-tab{
+  writing-mode:vertical-rl;font-family:var(--serif);font-size:13px;letter-spacing:.32em;
+  color:#F4F1EA;background:var(--seal);border-radius:0 6px 6px 0;
+  padding:16px 8px 14px;box-shadow:2px 3px 10px -4px rgba(25,23,19,.4);
+}
+.qr-side-tab:hover{background:#8C2A1F}
+.qr-side-panel{
+  width:0;overflow:hidden;opacity:0;transform:translateX(-8px);
+  transition:width .35s ease,opacity .3s ease,transform .35s ease;
+}
+.qr-side:hover .qr-side-panel,.qr-side.open .qr-side-panel{width:174px;opacity:1;transform:none}
+.qr-side-inner{
+  width:174px;padding:14px 14px 8px;text-align:center;
+  background:var(--paper-hi);border:1px solid var(--ink-4);border-left:0;border-radius:0 6px 6px 0;
+  box-shadow:4px 6px 18px -10px rgba(25,23,19,.35);
+}
+.qr-side-inner img{width:100%;height:auto;display:block;border:1px solid var(--ink-5)}
+.qr-side-inner p{font-family:var(--serif);font-size:12.5px;letter-spacing:.12em;color:var(--seal);margin:8px 0 12px}
+@media (max-width:860px){.qr-side{display:none}}
+</style>
+</head>
+<body>
+
+<!-- 顶部朱砂阅读进度条 -->
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+<!-- 右侧圆点导航 -->
+<nav class="dot-nav" id="dotNav" aria-label="章节导航">
+  <a href="#hero" data-sec="hero" aria-label="序章"><span class="dot"></span><span class="tip">序章</span></a>
+  <a href="#overview" data-sec="overview" aria-label="政策速览"><span class="dot"></span><span class="tip">速览</span></a>
+  <a href="#timeline" data-sec="timeline" aria-label="政策脉络"><span class="dot"></span><span class="tip">脉络</span></a>
+  <a href="#data" data-sec="data" aria-label="数据速览"><span class="dot"></span><span class="tip">数据</span></a>
+  <a href="#actions" data-sec="actions" aria-label="八大行动"><span class="dot"></span><span class="tip">行动</span></a>
+  <a href="#quote" data-sec="quote" aria-label="金句总结"><span class="dot"></span><span class="tip">金句</span></a>
+  <a href="#footer" data-sec="footer" aria-label="页脚"><span class="dot"></span><span class="tip">页脚</span></a>
+</nav>
+
+<!-- ============ Section 1 · Hero ============ -->
+<section class="hero" id="hero">
+  <img class="hero-bg" src="assets/ink-hero.jpg" alt="" aria-hidden="true" decoding="async">
+  <div class="wrap hero-inner">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-3);text-decoration:none;border-bottom:1px solid transparent;margin-bottom:24px;transition:color .25s,border-color .25s" onmouseover="this.style.color='var(--ink-1)';this.style.borderBottomColor='rgba(25,23,19,.32)'" onmouseout="this.style.color='var(--ink-3)';this.style.borderBottomColor='transparent'">← 返回热AI 实验室</a>
+    <p class="hero-tag reveal">国家发展和改革委员会 · WAIC 2026 发布成果</p>
+    <h1 class="hero-title">
+      <span class="reveal" style="--d:.12s">人工智能</span>
+      <span class="reveal" style="--d:.26s">合作发展<span class="accent">行动计划</span></span>
+    </h1>
+    <p class="hero-sub reveal" style="--d:.42s">八大行动 · 一个愿景——<em>让人工智能成为造福全人类的国际公共产品</em></p>
+    <p class="hero-meta reveal" style="--d:.56s">2026.07.17 发布 · 2026世界人工智能大会暨人工智能全球治理高级别会议（7.17—7.20 · 上海） · 大会主题"智能伙伴 共创未来"</p>
+  </div>
+  <div class="hero-deco reveal" style="--d:.7s" aria-hidden="true">
+    <div class="vertical-note">智能伙伴 共创未来</div>
+  </div>
+  <a class="scroll-cue" href="#overview" aria-label="向下滚动">
+    <span>向下</span>
+    <svg width="18" height="26" viewBox="0 0 18 26" fill="none" aria-hidden="true">
+      <path d="M9 2 v18 M3 14 l6 7 6-7" stroke="#6E6A61" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</section>
+
+<!-- ============ Section 2 · 政策速览 ============ -->
+<section class="section" id="overview">
+  <div class="wrap">
+    <div class="narrow">
+      <p class="kicker reveal"><span class="no">01</span>政策速览</p>
+      <h2 class="sec-title reveal" style="--d:.08s">一份面向世界的<br>人工智能合作清单</h2>
+      <p class="intro-text reveal" style="--d:.16s;margin-top:36px">2026年7月17日，国家发展改革委在2026世界人工智能大会（WAIC 2026）上发布《人工智能合作发展行动计划》。这是继2025年国务院印发《关于深入实施"人工智能+"行动的意见》、2025世界人工智能大会发布《人工智能全球治理行动计划》之后，中国在人工智能全球合作上拿出的最新行动清单——围绕数据、算力、开源、赋能、人才、标准、安全、向善八个方向，面向全球尤其是发展中国家，提出一整套可落地的合作举措。</p>
+    </div>
+    <!-- ink-pastoral 卷轴装裱横幅 -->
+    <figure class="scroll-mount reveal" style="--d:.24s">
+      <span class="rod rod-t" aria-hidden="true"></span>
+      <img src="assets/ink-pastoral.jpg" alt="水墨田园：梯田、石桥、村舍、垂柳与牧牛" loading="lazy" decoding="async">
+      <figcaption>卷 · 山水田园 —— 梯田引水，石桥归牧；合作如耕耘，润物细无声</figcaption>
+      <span class="rod rod-b" aria-hidden="true"></span>
+    </figure>
+    <div class="info-cards">
+      <div class="info-card reveal" style="--d:.1s">
+        <p class="ic-label">发布机构</p>
+        <p class="ic-value">国家发展改革委</p>
+      </div>
+      <div class="info-card reveal" style="--d:.22s">
+        <p class="ic-label">发布场合</p>
+        <p class="ic-value">WAIC 2026 · 上海</p>
+      </div>
+    </div>
+    <div class="narrow">
+      <blockquote class="position-quote reveal" style="--d:.2s">如果说'人工智能+'行动回答的是中国怎么用AI，这份计划回答的是——中国愿与世界怎样共用AI。</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- 分隔 · 远山淡影 -->
+<div class="ink-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice">
+    <path fill="#D9D4C7" opacity=".6" d="M0 84 C60 70 110 48 170 58 C230 68 260 88 330 80 C400 72 430 40 500 44 C570 48 600 78 680 76 C760 74 800 46 880 50 C960 54 990 82 1070 80 C1150 78 1200 52 1280 58 C1340 63 1390 76 1440 72 L1440 120 L0 120 Z"/>
+    <path fill="#A9A499" opacity=".32" d="M0 98 C80 88 150 74 240 82 C330 90 380 100 470 94 C560 88 620 70 720 76 C820 82 870 98 970 94 C1070 90 1130 74 1230 80 C1310 85 1380 94 1440 90 L1440 120 L0 120 Z"/>
+    <path fill="none" stroke="#6E6A61" stroke-width="1" opacity=".22" stroke-dasharray="70 14 6 10 130 18" d="M0 92 C200 78 380 88 560 84 C740 80 900 88 1080 84 C1240 81 1350 86 1440 84"/>
+  </svg>
+</div>
+
+<!-- ============ Section 3 · 政策脉络 ============ -->
+<section class="section" id="timeline" style="padding-top:44px">
+  <div class="wrap">
+    <p class="kicker reveal"><span class="no">02</span>政策脉络</p>
+    <h2 class="sec-title reveal" style="--d:.08s">政策脉络：从国内行动到全球方案</h2>
+    <p class="sec-sub reveal" style="--d:.14s">三份文件，一条清晰的演进线索</p>
+    <div class="timeline">
+      <div class="timeline-track" aria-hidden="true">
+        <!-- 手绘墨线（飞白笔触）：横向 -->
+        <svg class="tk-h" viewBox="0 0 1200 26" preserveAspectRatio="none">
+          <path d="M6 13 C 150 7, 300 18, 460 11 S 760 17, 920 10 S 1120 16, 1194 12" fill="none" stroke="#6E6A61" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="46 9 5 7 90 12 28 8" opacity=".55"/>
+        </svg>
+        <!-- 手绘墨线：纵向（移动端） -->
+        <svg class="tk-v" viewBox="0 0 26 1200" preserveAspectRatio="none">
+          <path d="M13 6 C 7 150, 18 300, 11 460 S 17 760, 10 920 S 16 1120, 12 1194" fill="none" stroke="#6E6A61" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="46 9 5 7 90 12 28 8" opacity=".55"/>
+        </svg>
+      </div>
+      <div class="timeline-nodes">
+        <div class="t-node reveal" style="--d:.1s">
+          <span class="t-dot" aria-hidden="true"></span>
+          <button class="t-card" type="button" aria-expanded="false">
+            <p class="t-date">2025.08</p>
+            <p class="t-name">《关于深入实施"人工智能+"行动的意见》</p>
+            <p class="t-desc">国内纲领，推动AI赋能千行百业</p>
+            <span class="t-note"><span><p><b>定位 · 国内行动纲领</b>——先回答中国自己怎么用AI，为后续的国际合作奠定国内实践基础。</p></span></span>
+          </button>
+        </div>
+        <div class="t-node reveal" style="--d:.24s">
+          <span class="t-dot" aria-hidden="true"></span>
+          <button class="t-card" type="button" aria-expanded="false">
+            <p class="t-date">2025 WAIC</p>
+            <p class="t-name">《人工智能全球治理行动计划》</p>
+            <p class="t-desc">全球治理的中国倡议（基线文件）</p>
+            <span class="t-note"><span><p><b>定位 · 全球治理基线</b>——面向世界提出AI治理的中国倡议，凝聚国际共识。</p></span></span>
+          </button>
+        </div>
+        <div class="t-node current reveal" style="--d:.38s">
+          <svg class="t-stamp" viewBox="0 0 60 60" aria-hidden="true">
+            <rect x="4" y="4" width="52" height="52" rx="6" fill="#A63326"/>
+            <rect x="9" y="9" width="42" height="42" rx="3" fill="none" stroke="#F4F1EA" stroke-width="1.6" opacity=".9"/>
+            <text x="30" y="41" text-anchor="middle" font-size="26" fill="#F4F1EA"
+              font-family="'Noto Serif SC','Source Han Serif SC','Songti SC','STSong','SimSun',serif" font-weight="700">新</text>
+          </svg>
+          <span class="t-dot" aria-hidden="true"></span>
+          <button class="t-card" type="button" aria-expanded="false">
+            <p class="t-date">2026.07.17</p>
+            <p class="t-name">《人工智能合作发展行动计划》</p>
+            <p class="t-desc">本次发布：从治理共识走向合作行动</p>
+            <span class="t-note"><span><p><b>定位 · 国际合作清单</b>——把治理共识落成八个可执行的合作行动，即本页解读对象。</p></span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p class="t-hint reveal" style="--d:.2s">悬停或点击节点，查看补充说明</p>
+  </div>
+</section>
+
+<!-- 分隔 · 大笔触飞白墨痕 -->
+<div class="ink-brush" aria-hidden="true">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="xMidYMid meet">
+    <path d="M24 22 C 220 11, 400 30, 620 17 C 800 8, 980 28, 1176 15" fill="none" stroke="#3B3833" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="170 14 40 9 250 18 80 12" opacity=".45"/>
+    <path d="M90 31 C 300 24, 520 35, 740 26 C 920 20, 1060 32, 1140 27" fill="none" stroke="#6E6A61" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="90 10 26 8 150 14" opacity=".3"/>
+  </svg>
+</div>
+
+<!-- ============ Section 4 · 数据速览（深墨夜色） ============ -->
+<section class="section dark" id="data">
+  <div class="data-bamboo" aria-hidden="true"><img src="assets/ink-bamboo.jpg" alt="" loading="lazy" decoding="async"></div>
+  <div class="wrap">
+    <p class="kicker reveal"><span class="no">03</span>数据速览</p>
+    <h2 class="sec-title reveal" style="--d:.08s">底气：中国AI的家底</h2>
+    <p class="sec-sub reveal" style="--d:.14s">数据源自2026年7月7日上海市政府新闻发布会（国家发展改革委介绍情况）</p>
+    <div class="stats-grid">
+      <div class="stat reveal" style="--d:.05s">
+        <p class="stat-num"><span class="cv" data-value="1">0</span><span class="cs">万亿+</span><span class="stat-unit">元</span></p>
+        <p class="stat-label"><b>2025年我国人工智能相关产业规模</b>，2026年预计保持30%以上增速</p>
+      </div>
+      <div class="stat reveal" style="--d:.14s">
+        <p class="stat-num"><span class="cv" data-value="30">0</span><span class="cs">+</span><span class="stat-unit">个</span></p>
+        <p class="stat-label"><b>国家人工智能应用中试基地</b></p>
+      </div>
+      <div class="stat reveal" style="--d:.23s">
+        <p class="stat-num"><span class="cv" data-value="1000">0</span><span class="cs">+</span><span class="stat-unit">个</span></p>
+        <p class="stat-label"><b>中央企业、国企开放的应用场景</b></p>
+      </div>
+      <div class="stat reveal" style="--d:.05s">
+        <p class="stat-num"><span class="cv" data-value="80">0</span><span class="cs">%+</span></p>
+        <p class="stat-label"><b>重点行业人工智能整体渗透率</b></p>
+      </div>
+      <div class="stat reveal" style="--d:.14s">
+        <p class="stat-num"><span class="cv" data-value="1">0</span><span class="cs">亿+</span><span class="stat-unit">台</span></p>
+        <p class="stat-label"><b>AI手机、AI电脑等智能终端年出货量</b>（2025年）</p>
+      </div>
+      <div class="stat reveal" style="--d:.23s">
+        <p class="stat-num"><span class="cv" data-value="2000">0</span><span class="cs">万+</span><span class="stat-unit">次</span></p>
+        <p class="stat-label"><b>AI原生办公智能体月访问量</b></p>
+      </div>
+    </div>
+    <p class="src-note reveal" style="--d:.2s">注：以上为公开发布口径，产业规模、渗透率等为约数。</p>
+  </div>
+</section>
+
+<!-- 分隔 · 远山淡影（镜像） -->
+<div class="ink-divider flip" aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice">
+    <path fill="#D9D4C7" opacity=".6" d="M0 80 C70 66 130 44 200 56 C270 68 300 86 370 78 C440 70 480 38 550 46 C620 54 650 80 730 78 C810 76 850 44 930 50 C1010 56 1040 84 1120 82 C1200 80 1250 54 1330 60 C1380 64 1410 74 1440 70 L1440 120 L0 120 Z"/>
+    <path fill="#A9A499" opacity=".3" d="M0 100 C90 90 160 76 250 84 C340 92 390 102 480 96 C570 90 630 72 730 78 C830 84 880 100 980 96 C1080 92 1140 76 1240 82 C1320 87 1385 96 1440 92 L1440 120 L0 120 Z"/>
+    <path fill="none" stroke="#6E6A61" stroke-width="1" opacity=".2" stroke-dasharray="80 16 6 10 120 18" d="M0 94 C220 80 400 90 580 86 C760 82 920 90 1100 86 C1260 83 1360 88 1440 86"/>
+  </svg>
+</div>
+
+<!-- ============ Section 5 · 八大行动 ============ -->
+<section class="section" id="actions">
+  <div class="wrap">
+    <p class="kicker reveal"><span class="no">04</span>八大行动</p>
+    <h2 class="sec-title reveal" style="--d:.08s">八大行动：一份国际合作清单</h2>
+    <p class="sec-sub reveal" style="--d:.14s">三条主线，看懂八个行动</p>
+
+    <!-- 三层逻辑架构图（自下而上：筑基 → 赋能 → 共治；墨阶：浓 → 中 → 淡） -->
+    <div class="arch-wrap reveal" style="--d:.1s">
+      <svg class="arch-svg" id="archSvg" viewBox="0 0 960 520" role="group" aria-label="三层逻辑架构图：筑基层、赋能层、共治层">
+        <defs>
+          <style>
+            .l-title{font-family:'Noto Serif SC','Source Han Serif SC','Songti SC','STSong','SimSun',serif;font-weight:700}
+            .l-items{font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif}
+          </style>
+        </defs>
+        <!-- 顶层：共治 · 规则保障（淡墨，远山淡影） -->
+        <g class="arch-layer" data-layer="govern" tabindex="0" role="button" aria-pressed="false" aria-label="共治层：规则标准共建、安全治理协作、人工智能向善">
+          <polygon class="band" points="306,26 654,26 712,152 248,152"
+            fill="#A9A499" fill-opacity=".55" stroke="#A9A499" stroke-opacity=".85" stroke-width="1.6"/>
+          <text class="l-title" x="480" y="76" text-anchor="middle" font-size="27" letter-spacing="6" fill="#A63326">共治 · 规则保障</text>
+          <text class="l-items" x="480" y="118" text-anchor="middle" font-size="16" letter-spacing="2" fill="#3B3833">⑥ 规则标准共建　·　⑦ 安全治理协作　·　⑧ 人工智能向善</text>
+        </g>
+        <!-- 中层：赋能 · 价值转化（中墨） -->
+        <g class="arch-layer" data-layer="empower" tabindex="0" role="button" aria-pressed="false" aria-label="赋能层：人工智能深度赋能、数智人才共育">
+          <polygon class="band" points="218,180 742,180 800,306 160,306"
+            fill="#6E6A61" fill-opacity=".85" stroke="#6E6A61" stroke-opacity=".9" stroke-width="1.6"/>
+          <text class="l-title" x="480" y="230" text-anchor="middle" font-size="27" letter-spacing="6" fill="#C8513F">赋能 · 价值转化</text>
+          <text class="l-items" x="480" y="272" text-anchor="middle" font-size="16" letter-spacing="2" fill="#F4F1EA" opacity=".85">④ 人工智能深度赋能　·　⑤ 数智人才共育</text>
+        </g>
+        <!-- 底层：筑基 · 要素供给（浓墨，厚） -->
+        <g class="arch-layer" data-layer="foundation" tabindex="0" role="button" aria-pressed="false" aria-label="筑基层：优质数据供给、智能算力普惠、开源生态共享">
+          <polygon class="band" points="130,334 830,334 888,460 72,460"
+            fill="#191713" fill-opacity="1" stroke="#191713" stroke-opacity="1" stroke-width="1.6"/>
+          <text class="l-title" x="480" y="384" text-anchor="middle" font-size="27" letter-spacing="6" fill="#C8513F">筑基 · 要素供给</text>
+          <text class="l-items" x="480" y="426" text-anchor="middle" font-size="16" letter-spacing="2" fill="#F4F1EA" opacity=".85">① 优质数据供给　·　② 智能算力普惠　·　③ 开源生态共享</text>
+        </g>
+        <!-- 左侧自下而上导向箭头 -->
+        <g aria-hidden="true" opacity=".55">
+          <path d="M40 470 L40 60" stroke="#A9A499" stroke-width="1.2" stroke-dasharray="3 5"/>
+          <path d="M34 72 L40 58 L46 72" fill="none" stroke="#A9A499" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="24" y="270" text-anchor="middle" font-size="12" letter-spacing="3" fill="#6E6A61"
+            transform="rotate(-90 24 270)" class="l-items">自下而上 · 层层递进</text>
+        </g>
+      </svg>
+      <div class="arch-caption">
+        <p class="order">阅读顺序：自下而上 —— <b style="color:var(--l-found)">筑基</b> → <b style="color:var(--l-emp)">赋能</b> → <b style="color:var(--l-gov)">共治</b>（点击层架或下方标签，联动卡片）</p>
+        <div class="filter-pills" id="filterPills">
+          <span class="fp-label">筛选</span>
+          <button class="fp active" type="button" data-layer="all">全部</button>
+          <button class="fp" type="button" data-layer="foundation">筑基</button>
+          <button class="fp" type="button" data-layer="empower">赋能</button>
+          <button class="fp" type="button" data-layer="govern">共治</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 行动卡片列表（手风琴，同时只展开一张） -->
+    <div class="cards" id="cards">
+      <!-- 壹 -->
+      <article class="card reveal" data-layer="foundation" style="--lc:var(--l-found);--lct:#F4F1EA;--d:.04s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-1" id="card-head-1">
+          <span class="card-num" aria-hidden="true">壹</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">优质数据供给行动</span><span class="layer-pill">筑基 · 要素供给</span></span>
+            <span class="card-summary">让数据"流得动、够得着、用得好"</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-1" role="region" aria-labelledby="card-head-1">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">推进数据跨境流动，在部分领域建设运营跨境可信数据空间，促进高效、便利、安全的数据跨境流动；协同构建高质量语料库和行业高质量数据集，推动多语种语料共建共享。</blockquote>
+                <div class="kw-row"><span class="kw">跨境可信数据空间</span><span class="kw">高质量语料库</span><span class="kw">多语种共建</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">数据是AI的"燃料"。这一行动直指全球AI合作两大痛点——数据"流不动"（跨境合规难）与"不够用"（高质量语料稀缺，小语种尤其如此）。"跨境可信数据空间"是关键设计：不是简单放开，而是在可信、安全的技术框架内让数据可用、可共享。</p>
+                <p class="hl"><b>看点</b><span>小语种语料共建共享，是面向全球南方的普惠设计。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 贰 -->
+      <article class="card reveal" data-layer="foundation" style="--lc:var(--l-found);--lct:#F4F1EA;--d:.08s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-2" id="card-head-2">
+          <span class="card-num" aria-hidden="true">贰</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">智能算力普惠行动</span><span class="layer-pill">筑基 · 要素供给</span></span>
+            <span class="card-summary">把算力从"门槛"变成"公共服务"</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-2" role="region" aria-labelledby="card-head-2">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">推动智能算力设施联通；面向发展中国家提供普惠智算服务；联合建设绿色能源驱动基础设施，推动智算设施绿色低碳发展。</blockquote>
+                <div class="kw-row"><span class="kw">算力设施联通</span><span class="kw">普惠智算</span><span class="kw">绿色能源</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">算力是AI时代最大的门槛资源，也是发展中国家最难跨越的鸿沟。这一行动把中国的算力基建能力与绿色能源优势打包成"普惠服务"——"普惠"是核心词：不是最贵的算力，而是可负担、可持续的算力。</p>
+                <p class="hl"><b>看点</b><span>"绿电+算力"组合，是中国算力出海的差异化叙事。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 叁 -->
+      <article class="card reveal" data-layer="foundation" style="--lc:var(--l-found);--lct:#F4F1EA;--d:.12s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-3" id="card-head-3">
+          <span class="card-num" aria-hidden="true">叁</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">开源生态共享行动</span><span class="layer-pill">筑基 · 要素供给</span></span>
+            <span class="card-summary">开源，从技术选择升级为国际公共品</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-3" role="region" aria-labelledby="card-head-3">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">鼓励共建国际人工智能开源社区，推动通用大模型、基础算法、工具组件共享；协同制定开源合规体系与安全准则；支持各国基于开源模型开展本土化创新。</blockquote>
+                <div class="kw-row"><span class="kw">国际开源社区</span><span class="kw">模型与算法共享</span><span class="kw">合规准则</span><span class="kw">本土化创新</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">这是中国AI开源路线的政策化表达。亮点在"本土化创新"——不只共享模型，还支持各国用自己的语言和数据做二次开发。同时主动提出共建"开源合规体系与安全准则"，回应国际社会对开源安全的关切。</p>
+                <p class="hl"><b>看点</b><span>从"用开源"到"共治开源"，角色在升级。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 肆 -->
+      <article class="card reveal" data-layer="empower" style="--lc:var(--l-emp);--lct:#F4F1EA;--d:.16s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-4" id="card-head-4">
+          <span class="card-num" aria-hidden="true">肆</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">人工智能深度赋能行动</span><span class="layer-pill">赋能 · 价值转化</span></span>
+            <span class="card-summary">"人工智能+"的国际版</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-4" role="region" aria-labelledby="card-head-4">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">深化"人工智能+"合作，搭建跨国产业合作平台，支持面向发展中国家数智能力建设，促进智能体规范应用与创新发展，推动人工智能在科学、制造、医疗、教育、农业、治理等领域应用赋能。</blockquote>
+                <div class="kw-row"><span class="kw">人工智能+</span><span class="kw">跨国产业平台</span><span class="kw">智能体</span><span class="kw">六大领域</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">这是国内"人工智能+"行动的国际延伸。六大领域的选择很有讲究：科学、制造指向生产力，医疗、教育、农业是民生刚需，治理是公共品——全部对准发展中国家的真实需求。"智能体规范应用"写入此类文件，说明 Agent 已从技术概念进入政策视野。</p>
+                <p class="hl"><b>看点</b><span>智能体（Agent）被点名，应用层合作有了新抓手。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 伍 -->
+      <article class="card reveal" data-layer="empower" style="--lc:var(--l-emp);--lct:#F4F1EA;--d:.2s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-5" id="card-head-5">
+          <span class="card-num" aria-hidden="true">伍</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">数智人才共育行动</span><span class="layer-pill">赋能 · 价值转化</span></span>
+            <span class="card-summary">AI竞争归根到底是人的竞争</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-5" role="region" aria-labelledby="card-head-5">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">共建拔尖数智人才联合培养机制，推动高校、科研机构和企业国际合作；协同制定职业标准与技能认证体系；提升社会公众人工智能素养，关注和保障弱势群体权益，共同应对人工智能快速发展对就业的影响。</blockquote>
+                <div class="kw-row"><span class="kw">联合培养</span><span class="kw">技能认证</span><span class="kw">公众AI素养</span><span class="kw">就业影响</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">这一行动的视角是"共育"而非"争夺"：联合培养、互认的技能认证、面向公众的AI素养。两个细节值得注意——把"弱势群体权益"和"就业冲击"写进国际合作文件，体现了对AI社会影响的正视。</p>
+                <p class="hl"><b>看点</b><span>职业标准与技能认证的"协同制定"，是人才跨国流动的基础设施建设。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 陆 -->
+      <article class="card reveal" data-layer="govern" style="--lc:var(--l-gov);--lct:#191713;--d:.24s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-6" id="card-head-6">
+          <span class="card-num" aria-hidden="true">陆</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">规则标准共建行动</span><span class="layer-pill">共治 · 规则保障</span></span>
+            <span class="card-summary">标准是AI时代的通用语言</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-6" role="region" aria-labelledby="card-head-6">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">共建人工智能标准规范体系，推动国际标准制修订；协同构建标准对接协调机制，促进标准体系包容性与互操作性；加强人工智能发展战略、治理规则、技术标准的对接协调。</blockquote>
+                <div class="kw-row"><span class="kw">国际标准</span><span class="kw">互操作性</span><span class="kw">规则对接</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">标准之争是AI大国博弈的焦点。这一行动的关键词是"包容性"与"互操作性"——不追求一家标准通吃，而是推动不同标准体系之间能对话、能对接，降低全球AI协作的制度成本。</p>
+                <p class="hl"><b>看点</b><span>"对接协调"比"主导制定"更务实，也更容易形成共识。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 柒 -->
+      <article class="card reveal" data-layer="govern" style="--lc:var(--l-gov);--lct:#191713;--d:.28s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-7" id="card-head-7">
+          <span class="card-num" aria-hidden="true">柒</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">安全治理协作行动</span><span class="layer-pill">共治 · 规则保障</span></span>
+            <span class="card-summary">把安全从"各扫门前雪"变成"协作机制"</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-7" role="region" aria-labelledby="card-head-7">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">共建人工智能安全治理机制，加强网络安全威胁信息共享和应急处置合作，防范人工智能技术误用、滥用；研究提升人工智能可解释性、透明性、安全性，加强人工智能数据治理；提倡建立开放性平台，共享最佳实践。</blockquote>
+                <div class="kw-row"><span class="kw">安全治理机制</span><span class="kw">威胁信息共享</span><span class="kw">可解释性</span><span class="kw">最佳实践平台</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">发展与安全一体两面。这一行动给出了可操作的安全合作抓手：威胁情报共享、应急处置联动、最佳实践开放平台。"可解释性、透明性"直指AI治理的技术深水区，也呼应了全球对"黑箱"的普遍焦虑。</p>
+                <p class="hl"><b>看点</b><span>从原则宣示走向机制建设，安全合作有了"施工图纸"。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 捌 -->
+      <article class="card reveal" data-layer="govern" style="--lc:var(--l-gov);--lct:#191713;--d:.32s">
+        <button class="card-head" type="button" aria-expanded="false" aria-controls="card-body-8" id="card-head-8">
+          <span class="card-num" aria-hidden="true">捌</span>
+          <span class="card-head-main">
+            <span class="card-title-row"><span class="card-name">人工智能向善行动</span><span class="layer-pill">共治 · 规则保障</span></span>
+            <span class="card-summary">整份计划的价值底座</span>
+          </span>
+          <span class="card-chev" aria-hidden="true"><svg width="14" height="9" viewBox="0 0 14 9" fill="none"><path d="M1 1l6 6 6-6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <div class="card-body" id="card-body-8" role="region" aria-labelledby="card-head-8">
+          <div>
+            <div class="card-body-inner">
+              <div class="cb-col">
+                <p class="cb-label">原文要点</p>
+                <blockquote class="cb-quote">坚持公开透明、保护隐私安全、确保可控可信的人工智能科技伦理原则，共建人工智能伦理准则体系；贯彻落实以人为本、智能向善理念；消除种族主义、歧视和其他形式的算法偏见，保障公平性和非歧视性；推进AI科研国际治理合作，为全球南方贡献公共科学产品，服务联合国2030可持续发展目标。</blockquote>
+                <div class="kw-row"><span class="kw">智能向善</span><span class="kw">算法偏见</span><span class="kw">全球南方</span><span class="kw">联合国2030议程</span></div>
+              </div>
+              <div class="cb-col">
+                <p class="cb-label">白话解读</p>
+                <p class="cb-read">前七个行动回答"能做什么、怎么合作"，这一行动回答"该做什么"。"消除算法偏见"明确点名种族主义与歧视，回应全球南方对既有AI体系的担忧；"公共科学产品"把AI科研能力定位为全球公共品，最终落点是联合国2030议程。</p>
+                <p class="hl"><b>看点</b><span>"为全球南方贡献公共科学产品"，是整份计划最有分量的承诺之一。</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div><!-- /.cards -->
+  </div>
+</section>
+
+<!-- 分隔 · 大笔触飞白墨痕 -->
+<div class="ink-brush" aria-hidden="true">
+  <svg viewBox="0 0 1200 44" preserveAspectRatio="xMidYMid meet">
+    <path d="M24 20 C 240 12, 420 29, 640 18 C 820 9, 1000 27, 1176 16" fill="none" stroke="#3B3833" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="150 16 46 10 220 20 90 12" opacity=".4"/>
+    <path d="M110 30 C 310 23, 520 34, 750 25 C 930 19, 1070 31, 1140 26" fill="none" stroke="#A9A499" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="80 12 30 8 140 16" opacity=".4"/>
+  </svg>
+</div>
+
+<!-- ============ Section 6 · 金句总结（夜色长卷） ============ -->
+<section class="section dark quote-sec" id="quote">
+  <img class="quote-bg" src="assets/ink-scroll.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+  <div class="wrap">
+    <p class="kicker reveal" style="justify-content:center"><span class="no">05</span>金句总结</p>
+    <div class="quote-lines">
+      <p class="quote-line reveal" style="--d:.1s"><em>数据、算力、开源</em>，<span class="ql-red">筑牢底座；</span></p>
+      <p class="quote-line reveal" style="--d:.3s"><em class="c">赋能、人才</em>，<span class="ql-red">创造价值；</span></p>
+      <p class="quote-line reveal" style="--d:.5s"><em class="t">标准、安全、向善</em>，<span class="ql-red">行稳致远。</span></p>
+    </div>
+    <p class="quote-sub reveal" style="--d:.68s">让智能红利跨越数字鸿沟，让人工智能成为造福全人类的国际公共产品。</p>
+  </div>
+</section>
+
+<!-- ============ Section 7 · 页脚 ============ -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <p class="kicker reveal"><span class="no">06</span>来源与声明</p>
+    <div class="footer-grid" style="margin-top:38px">
+      <figure class="f-bamboo reveal" style="--d:.06s">
+        <img src="assets/ink-bamboo.jpg" alt="墨竹图" loading="lazy" decoding="async">
+        <figcaption>墨竹 · 清影</figcaption>
+      </figure>
+      <div class="f-right">
+        <div class="f-item reveal" style="--d:.1s">
+          <p class="f-label">政策原文</p>
+          <p>国家发展和改革委员会官网（2026-07-17发布）<br>
+          <a href="https://www.ndrc.gov.cn/xwdt/xwfb/202607/t20260717_1406562.html" target="_blank" rel="noopener">《人工智能合作发展行动计划》原文链接</a></p>
+        </div>
+        <div class="f-item reveal" style="--d:.2s">
+          <p class="f-label">背景资料</p>
+          <p>上海市政府新闻发布会（2026-07-07）<br>WAIC 2026 公开报道</p>
+        </div>
+      </div>
+    </div>
+    <div class="qr-block reveal" style="--d:.24s">
+      <p class="qr-heading">社区共建 · 扫码交流</p>
+      <div class="qr-cards">
+        <figure class="qr-card">
+          <div class="qr-frame"><img class="qr-community-img" src="assets/qr-community.jpg" alt="2026 WAIC 交流群二维码" loading="lazy" decoding="async"></div>
+          <figcaption>社区交流群<small>2026 WAIC 交流群 · @热AI实验室</small></figcaption>
+        </figure>
+        <figure class="qr-card">
+          <div class="qr-frame"><img class="qr-contact-img" src="assets/qr-contact.png" alt="社区负责人微信二维码" loading="lazy" decoding="async"></div>
+          <figcaption>社区负责人<small>扫码添加微信</small></figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="f-declare reveal" style="--d:.28s">本页面为个人学习性政策解读与可视化整理，不代表任何官方立场</p>
+  </div>
+</footer>
+
+<aside class="qr-side" aria-label="社区二维码">
+  <button class="qr-side-tab" type="button" aria-expanded="false">社区交流</button>
+  <div class="qr-side-panel">
+    <div class="qr-side-inner">
+      <img src="assets/qr-community.jpg" alt="社区交流群二维码" loading="lazy" decoding="async">
+      <p>扫码加入交流群</p>
+      <img src="assets/qr-contact.png" alt="社区负责人微信二维码" loading="lazy" decoding="async">
+      <p>社区负责人</p>
+    </div>
+  </div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- 1. 顶部阅读进度条 ---------- */
+  var bar = document.getElementById("progressBar");
+  var ticking = false;
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? (h.scrollTop || window.pageYOffset) / max : 0;
+    bar.style.transform = "scaleX(" + Math.min(1, Math.max(0, p)) + ")";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(updateProgress); }
+  }, {passive:true});
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  /* ---------- 2. IntersectionObserver 渐显 ---------- */
+  var revealEls = document.querySelectorAll(".reveal");
+  if(reduced || !("IntersectionObserver" in window)){
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  }else{
+    var revealIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); revealIO.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+    revealEls.forEach(function(el){ revealIO.observe(el); });
+  }
+
+  /* ---------- 3. 右侧圆点导航：当前 section 高亮 + 平滑滚动 ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".dot-nav a"));
+  var secMap = {};
+  navLinks.forEach(function(a){ secMap[a.getAttribute("data-sec")] = a; });
+  function setActive(id){
+    navLinks.forEach(function(a){ a.classList.toggle("active", a.getAttribute("data-sec") === id); });
+  }
+  if("IntersectionObserver" in window){
+    var navIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ setActive(e.target.id); } });
+    }, {rootMargin:"-38% 0px -55% 0px", threshold:0});
+    Object.keys(secMap).forEach(function(id){
+      var s = document.getElementById(id);
+      if(s) navIO.observe(s);
+    });
+  }
+  navLinks.forEach(function(a){
+    a.addEventListener("click", function(ev){
+      ev.preventDefault();
+      var t = document.getElementById(a.getAttribute("data-sec"));
+      if(t){ t.scrollIntoView({behavior: reduced ? "auto" : "smooth", block:"start"}); }
+      setActive(a.getAttribute("data-sec"));
+    });
+  });
+
+  /* ---------- 4. 数据速览：大数字 count-up（仅数值部分动画，前后缀静态） ---------- */
+  function countUp(el){
+    var target = parseFloat(el.getAttribute("data-value")) || 0;
+    if(reduced){ el.textContent = String(target); return; }
+    var dur = 1200, t0 = null;
+    function frame(t){
+      if(t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      var e = 1 - Math.pow(1 - p, 3); /* easeOutCubic */
+      el.textContent = String(Math.round(target * e));
+      if(p < 1){ requestAnimationFrame(frame); }else{ el.textContent = String(target); }
+    }
+    requestAnimationFrame(frame);
+  }
+  var statNums = document.querySelectorAll(".cv[data-value]");
+  if(reduced || !("IntersectionObserver" in window)){
+    statNums.forEach(function(el){ el.textContent = el.getAttribute("data-value"); });
+  }else{
+    var statIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ countUp(e.target); statIO.unobserve(e.target); }
+      });
+    }, {threshold:.5});
+    statNums.forEach(function(el){ statIO.observe(el); });
+  }
+
+  /* ---------- 5. 行动卡片：手风琴（同时只展开一张，箭头旋转） ---------- */
+  var cards = Array.prototype.slice.call(document.querySelectorAll("#cards .card"));
+  function closeCard(c){
+    c.classList.remove("open");
+    c.querySelector(".card-head").setAttribute("aria-expanded","false");
+  }
+  function openCard(c){
+    c.classList.add("open");
+    c.querySelector(".card-head").setAttribute("aria-expanded","true");
+  }
+  cards.forEach(function(c){
+    c.querySelector(".card-head").addEventListener("click", function(){
+      var wasOpen = c.classList.contains("open");
+      cards.forEach(closeCard);
+      if(!wasOpen) openCard(c);
+    });
+  });
+  if(cards.length) openCard(cards[0]); /* 默认展开第壹张，示意结构 */
+
+  /* ---------- 6. 三层架构图 ⇄ 卡片联动筛选 ---------- */
+  var archSvg = document.getElementById("archSvg");
+  var layers = Array.prototype.slice.call(archSvg.querySelectorAll(".arch-layer"));
+  var pills = Array.prototype.slice.call(document.querySelectorAll("#filterPills .fp"));
+  var currentFilter = null;
+
+  function applyFilter(layer){ /* layer: "foundation"|"empower"|"govern"|null */
+    currentFilter = layer;
+    archSvg.classList.toggle("dimmed", !!layer);
+    layers.forEach(function(g){
+      var on = !!layer && g.getAttribute("data-layer") === layer;
+      g.classList.toggle("active", on);
+      g.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    pills.forEach(function(p){
+      p.classList.toggle("active", p.getAttribute("data-layer") === (layer || "all"));
+    });
+    cards.forEach(function(c){
+      var match = !!layer && c.getAttribute("data-layer") === layer;
+      c.classList.toggle("hit", match);
+      c.classList.toggle("dim", !!layer && !match);
+    });
+  }
+  function toggleFilter(layer){
+    applyFilter(currentFilter === layer ? null : layer);
+    if(currentFilter){ /* 滚到首张命中卡片，便于查看联动结果 */
+      var first = cards.filter(function(c){ return c.getAttribute("data-layer") === currentFilter; })[0];
+      if(first && !reduced){
+        var r = first.getBoundingClientRect();
+        if(r.top < 0 || r.top > window.innerHeight * .6){
+          first.scrollIntoView({behavior:"smooth", block:"center"});
+        }
+      }
+    }
+  }
+  layers.forEach(function(g){
+    var layer = g.getAttribute("data-layer");
+    g.addEventListener("click", function(){ toggleFilter(layer); });
+    g.addEventListener("keydown", function(ev){
+      if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggleFilter(layer); }
+    });
+    /* 悬停预览：未锁定筛选时，临时高亮对应卡片 */
+    g.addEventListener("mouseenter", function(){
+      if(currentFilter) return;
+      cards.forEach(function(c){
+        c.classList.toggle("hit", c.getAttribute("data-layer") === layer);
+        c.classList.toggle("dim", c.getAttribute("data-layer") !== layer);
+      });
+    });
+    g.addEventListener("mouseleave", function(){
+      if(currentFilter) return;
+      cards.forEach(function(c){ c.classList.remove("hit"); c.classList.remove("dim"); });
+    });
+  });
+  pills.forEach(function(p){
+    p.addEventListener("click", function(){
+      var l = p.getAttribute("data-layer");
+      applyFilter(l === "all" ? null : l);
+    });
+  });
+
+  /* ---------- 7. 时间轴节点：点击展开补充说明 ---------- */
+  document.querySelectorAll(".t-node .t-card").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var node = btn.closest(".t-node");
+      var open = node.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var side=document.querySelector('.qr-side'),tab=document.querySelector('.qr-side-tab');
+  if(tab){tab.addEventListener('click',function(){
+    var open=side.classList.toggle('open');
+    tab.setAttribute('aria-expanded',open?'true':'false');
+  });}
+})();
+</script>
+</body>
+</html>
