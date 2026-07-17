@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>热 AI 实验室 · 十大镇馆之宝 · WAIC 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary:        #F8F3EA;
+    --bg-card:           #FFFBF5;
+    --bg-card-visual:    #E8DDC8;
+    --bg-card-content:   linear-gradient(180deg, #FFFBF5 0%, #F9F3E5 100%);
+    --text-primary:      #2D2418;
+    --text-secondary:    #5C4F3D;
+    --text-muted:        #8C7E6C;
+    --heading-color:     #1B2A4A;
+    --accent:            #B33A3A;
+    --accent-dim:        #8B2A2A;
+    --gold:              #B8943D;
+    --gold-light:        #D4B96A;
+    --border:            rgba(44, 62, 107, 0.12);
+    --border-hover:      rgba(44, 62, 107, 0.2);
+    --highlight-color:   #B33A3A;
+    --font-heading:      'Noto Serif SC', 'Songti SC', serif;
+    --font-body:         'Noto Sans SC', 'PingFang SC', sans-serif;
+    --shadow-soft:       0 2px 20px rgba(45, 36, 24, 0.06);
+    --shadow-card:       0 4px 32px rgba(45, 36, 24, 0.08);
+    --shadow-hover:      0 12px 48px rgba(45, 36, 24, 0.14);
+    --bg-body:           #F8F3EA;
+    --card-topline:      linear-gradient(90deg, transparent 10%, rgba(184, 148, 61, 0.25) 30%, rgba(184, 148, 61, 0.25) 70%, transparent 90%);
+    --card-radius:       2px;
+    --brand-seal-border: var(--accent);
+    --waic-gradient:     linear-gradient(135deg, #1B2A4A 0%, #3A5A8C 100%);
+    --waic-text:         #F8F3EA;
+    --particle-color:    rgba(44, 62, 107, 0.12);
+    --particle-bright:   rgba(44, 62, 107, 0.22);
+  }
+
+  body.theme-tech {
+    --bg-primary:        #070B24;
+    --bg-card:           #0D1133;
+    --bg-card-visual:    #0A0E28;
+    --bg-card-content:   none;
+    --text-primary:      #E8ECF4;
+    --text-secondary:    #94A3B8;
+    --text-muted:        #64748B;
+    --heading-color:     #E8ECF4;
+    --accent:            #3B82F6;
+    --accent-dim:        #6366F1;
+    --gold:              #3B82F6;
+    --gold-light:        #93C5FD;
+    --border:            rgba(59, 130, 246, 0.15);
+    --border-hover:      rgba(59, 130, 246, 0.35);
+    --highlight-color:   #93C5FD;
+    --font-heading:      system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-body:         system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --shadow-soft:       none;
+    --shadow-card:       0 4px 24px rgba(59, 130, 246, 0.06);
+    --shadow-hover:      0 12px 40px rgba(59, 130, 246, 0.15);
+    --bg-body:           #070B24;
+    --card-topline:      none;
+    --card-radius:       20px;
+    --brand-seal-border: #3B82F6;
+    --waic-gradient:     linear-gradient(135deg, #0D1133 0%, #1A2569 50%, #3B82F6 100%);
+    --waic-text:         #E8ECF4;
+    --particle-color:    rgba(59, 130, 246, 0.06);
+    --particle-bright:   rgba(147, 197, 253, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-body);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.5s ease, color 0.5s ease, margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.sidebar-open { margin-right: 340px; }
+
+  /* ═══ 粒子画布 ═══ */
+  #particle-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    transition: opacity 0.5s;
+  }
+
+  /* ═══ 中国风山水 SVG ═══ */
+  .landscape-wrap {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 0;
+    pointer-events: none; height: 320px;
+    transition: opacity 0.5s;
+  }
+  body:not(.theme-tech) .landscape-wrap { display: block; }
+
+  .landscape-wrap svg { width: 100%; height: 100%; }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    padding: 56px 28px 80px;
+    transition: padding 0.3s;
+  }
+
+  /* ═══ 主题切换 ═══ */
+  .theme-toggle {
+    position: fixed; top: 20px; right: 20px; z-index: 200;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 6px 6px;
+    box-shadow: var(--shadow-soft); cursor: pointer;
+    transition: all 0.35s ease, right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+  }
+  body.sidebar-open .theme-toggle { right: 360px; }
+  .theme-toggle:hover { border-color: var(--border-hover); box-shadow: var(--shadow-card); }
+  .theme-toggle .toggle-option {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    padding: 6px 16px; border-radius: 20px;
+    transition: all 0.35s ease; color: var(--text-muted);
+    white-space: nowrap; font-family: var(--font-body);
+  }
+  .theme-toggle .toggle-option.active {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* ═══ WAIC 大会横幅 ═══ */
+  .waic-banner {
+    text-align: center; margin-bottom: 40px;
+    padding: 28px 32px 24px;
+    background: var(--waic-gradient); color: var(--waic-text);
+    border-radius: var(--card-radius);
+    position: relative; overflow: hidden;
+    transition: background 0.5s, color 0.5s, border-radius 0.35s;
+  }
+  .waic-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 40% 60% at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  body:not(.theme-tech) .waic-banner::after {
+    content: ''; position: absolute; inset: 8px;
+    border: 1px solid rgba(248, 243, 234, 0.15);
+    border-radius: var(--card-radius); pointer-events: none;
+    transition: border-radius 0.35s;
+  }
+  body.theme-tech .waic-banner { box-shadow: 0 0 40px rgba(59, 130, 246, 0.1); }
+  body.theme-tech .waic-banner::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    pointer-events: none; transition: border-radius 0.35s;
+  }
+  .waic-banner .waic-sub {
+    font-family: var(--font-heading); font-size: 12px;
+    font-weight: 500; letter-spacing: 4px; opacity: 0.7;
+    margin-bottom: 8px; position: relative;
+  }
+  .waic-banner .waic-main {
+    font-family: var(--font-heading); font-size: 38px;
+    font-weight: 900; letter-spacing: 6px; line-height: 1.3;
+    position: relative;
+  }
+  body.theme-tech .waic-banner .waic-main {
+    letter-spacing: 2px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #93C5FD 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .waic-banner .waic-info {
+    font-family: var(--font-heading); font-size: 12px;
+    letter-spacing: 2px; opacity: 0.6; margin-top: 10px; position: relative;
+  }
+
+  /* ═══ 品牌标识 ═══ */
+  .brand-bar { text-align: center; margin-bottom: 24px; display: none; }
+  body:not(.theme-tech) .brand-bar { display: block; }
+  .brand-mark { display: inline-flex; flex-direction: column; align-items: center; }
+  .brand-seal {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--brand-seal-border); border-radius: 4px;
+    color: var(--accent);
+    font-family: 'Noto Serif SC', serif; font-size: 16px; font-weight: 700;
+    letter-spacing: 1px; writing-mode: vertical-rl;
+    margin-bottom: 12px; position: relative;
+    transition: border-color 0.5s, color 0.5s;
+  }
+  .brand-seal::before {
+    content: ''; position: absolute; inset: 4px;
+    border: 1px solid rgba(179, 58, 58, 0.4); border-radius: 2px; pointer-events: none;
+  }
+  body.theme-tech .brand-seal::before { border-color: rgba(59, 130, 246, 0.3); }
+  .brand-name {
+    font-family: 'Noto Serif SC', serif; font-size: 12px;
+    font-weight: 600; color: var(--heading-color); letter-spacing: 3px;
+  }
+
+  /* ═══ 主标题 ═══ */
+  .hero { text-align: center; margin-bottom: 48px; }
+  .hero h1 {
+    font-family: var(--font-heading); font-size: 46px; font-weight: 900;
+    color: var(--heading-color); letter-spacing: 4px;
+    margin-bottom: 20px; line-height: 1.2; transition: color 0.5s;
+  }
+  body:not(.theme-tech) .hero h1 { letter-spacing: 10px; }
+  body.theme-tech .hero h1 {
+    background: linear-gradient(135deg, #E8ECF4 0%, #93C5FD 50%, #A78BFA 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; letter-spacing: -0.5px;
+  }
+  .hero .subtitle {
+    font-size: 14px; color: var(--text-secondary); line-height: 2;
+    max-width: 480px; margin: 0 auto; letter-spacing: 0.5px;
+    transition: color 0.5s;
+  }
+
+  /* ═══ 数据概览 ═══ */
+  .stats-wrap { margin-bottom: 56px; }
+  .stats {
+    display: flex; justify-content: center; gap: 48px;
+    flex-wrap: wrap; padding: 36px 0; position: relative; transition: gap 0.3s;
+  }
+  .stats::before, .stats::after {
+    content: ''; position: absolute; left: 50%; transform: translateX(-50%);
+    width: 60%; height: 1px;
+  }
+  body:not(.theme-tech) .stats::before,
+  body:not(.theme-tech) .stats::after {
+    background: linear-gradient(90deg, transparent, rgba(184, 148, 61, 0.3), transparent);
+  }
+  body.theme-tech .stats::before,
+  body.theme-tech .stats::after {
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+  }
+  .stats::before { top: 0; } .stats::after { bottom: 0; }
+  .stat { text-align: center; min-width: 100px; cursor: default; transition: transform 0.3s; }
+  .stat:hover { transform: translateY(-4px); }
+  .stat .num {
+    font-family: var(--font-heading); font-size: 32px; font-weight: 700;
+    color: var(--heading-color); margin-bottom: 6px; transition: color 0.5s;
+  }
+  body.theme-tech .stat .num {
+    background: linear-gradient(180deg, #93C5FD, #3B82F6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat .label {
+    font-size: 12px; color: var(--text-muted); letter-spacing: 1px; transition: color 0.5s;
+  }
+  .stats-cn { display: none; } body:not(.theme-tech) .stats-cn { display: flex; }
+  .stats-tech { display: none; } body.theme-tech .stats-tech { display: flex; }
+
+  /* ═══ 分隔线 ═══ */
+  .section-divider { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+  .section-divider .line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    transition: background 0.5s;
+  }
+  .section-divider span {
+    font-family: var(--font-heading); font-size: 13px; color: var(--text-muted);
+    letter-spacing: 4px; font-weight: 500; transition: color 0.5s;
+  }
+  .sd-cn { display: none; } body:not(.theme-tech) .sd-cn { display: inline; }
+  .sd-tech { display: none; } body.theme-tech .sd-tech { display: inline; }
+
+  /* ═══ 卡片 ═══ */
+  .card {
+    background: var(--bg-card); border-radius: var(--card-radius);
+    overflow: hidden; margin-bottom: 28px;
+    box-shadow: var(--shadow-soft); border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.35s ease, border-color 0.35s;
+    position: relative;
+    /* 入场动画初始状态 */
+    opacity: 0; transform: translateY(40px);
+  }
+  .card.visible { opacity: 1; transform: translateY(0); }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--card-topline); opacity: 0; transition: opacity 0.35s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); border-color: var(--border-hover); }
+  .card:hover::before { opacity: 1; }
+  .card-inner { display: flex; }
+
+  .card-visual {
+    flex-shrink: 0; width: 340px; min-height: 240px;
+    position: relative; background: var(--bg-card-visual);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; border-right: 1px solid var(--border);
+    transition: background 0.5s, border-color 0.5s;
+  }
+  .card-visual img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .card:hover .card-visual img { transform: scale(1.05); }
+
+  /* 图片底部渐变遮罩 */
+  .card-visual::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
+    opacity: 0; transition: opacity 0.4s; pointer-events: none;
+  }
+  .card:hover .card-visual::after { opacity: 1; }
+
+  .card-content {
+    flex: 1; min-width: 0; padding: 32px 36px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--bg-card-content); transition: all 0.5s;
+  }
+
+  /* 编号印章 */
+  .card-seal {
+    display: none; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border: 2px solid var(--accent);
+    border-radius: 3px; color: var(--accent);
+    font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700;
+    margin-bottom: 16px; position: relative; flex-shrink: 0;
+    transition: border-color 0.5s, color 0.5s, transform 0.3s;
+  }
+  .card:hover .card-seal { transform: scale(1.08); }
+  body:not(.theme-tech) .card-seal { display: inline-flex; }
+  .card-seal::after {
+    content: ''; position: absolute; inset: 3px;
+    border: 1px solid rgba(179, 58, 58, 0.35); border-radius: 1px; pointer-events: none;
+    transition: border-color 0.5s;
+  }
+  body.theme-tech .card-seal::after { border-color: rgba(59, 130, 246, 0.25); }
+
+  .card-rank {
+    display: none; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 8px;
+    font-size: 13px; font-weight: 700; margin-bottom: 12px;
+    background: linear-gradient(135deg, #3B82F6, #6366F1); color: #fff;
+    transition: transform 0.3s;
+  }
+  .card:hover .card-rank { transform: scale(1.1); }
+  body.theme-tech .card-rank { display: inline-flex; }
+
+  .card-content h2 {
+    font-family: var(--font-heading); font-size: 22px; font-weight: 700;
+    color: var(--heading-color); margin-bottom: 10px; line-height: 1.4;
+    letter-spacing: 1px; display: flex; align-items: baseline;
+    flex-wrap: wrap; gap: 10px; transition: color 0.5s;
+  }
+  body.theme-tech .card-content h2 { letter-spacing: -0.3px; }
+  .card-content .company {
+    font-size: 13px; color: var(--text-muted); margin-bottom: 18px;
+    letter-spacing: 2px; position: relative; padding-left: 18px;
+    transition: color 0.5s;
+  }
+  body.theme-tech .card-content .company { color: var(--gold); font-weight: 500; }
+  .card-content .company::before {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 8px; height: 1px; background: var(--gold); transition: background 0.5s;
+  }
+  body.theme-tech .card-content .company::before {
+    width: 4px; height: 4px; border-radius: 50%; background: #3B82F6;
+  }
+  .card-content .desc {
+    font-size: 13.5px; line-height: 2; color: var(--text-secondary); transition: color 0.5s;
+  }
+  .card-content .desc p { margin-bottom: 10px; }
+  .card-content .desc p:last-child { margin-bottom: 0; }
+  .highlight { color: var(--highlight-color); font-weight: 600; transition: color 0.5s; }
+
+  /* 中国风标签 */
+  .tag-seal {
+    display: none; align-items: center; justify-content: center;
+    font-family: 'Noto Serif SC', serif; font-size: 11px; font-weight: 600;
+    padding: 3px 12px; border: 1px solid;
+    letter-spacing: 1.5px; white-space: nowrap; transition: all 0.5s;
+  }
+  body:not(.theme-tech) .tag-seal { display: inline-flex; }
+  .tag-indigo  { color: #2C3E6B; border-color: rgba(44, 62, 107, 0.3); background: rgba(44, 62, 107, 0.05); }
+  .tag-jade    { color: #5B8C5A; border-color: rgba(91, 140, 90, 0.3);  background: rgba(91, 140, 90, 0.05); }
+  .tag-celadon { color: #5A7D73; border-color: rgba(90, 125, 115, 0.3); background: rgba(90, 125, 115, 0.05); }
+  .tag-gold    { color: #B8943D; border-color: rgba(184, 148, 61, 0.3); background: rgba(184, 148, 61, 0.05); }
+  .tag-ochre   { color: #9B7B4C; border-color: rgba(155, 123, 76, 0.3); background: rgba(155, 123, 76, 0.05); }
+  .tag-rust    { color: #9B4D3F; border-color: rgba(155, 77, 63, 0.3); background: rgba(155, 77, 63, 0.05); }
+
+  /* 科技风标签 */
+  .tag-chip {
+    display: none; font-size: 10px; font-weight: 600;
+    padding: 3px 10px; border-radius: 6px; letter-spacing: 1px; white-space: nowrap;
+  }
+  body.theme-tech .tag-chip { display: inline-block; }
+  .chip-hardware { background: rgba(251, 191, 36, 0.15); color: #FBBF24; }
+  .chip-robot    { background: rgba(52, 211, 153, 0.15); color: #34D399; }
+  .chip-agent    { background: rgba(167, 139, 250, 0.15); color: #A78BFA; }
+  .chip-device   { background: rgba(251, 146, 60, 0.15);  color: #FB923C; }
+  .chip-energy   { background: rgba(74, 222, 128, 0.15); color: #4ADE80; }
+  .chip-bio      { background: rgba(244, 114, 182, 0.15); color: #F472B6; }
+
+  /* ═══ 底部二维码区 ═══ */
+  .qr-section {
+    margin-top: 64px; margin-bottom: 48px; text-align: center;
+  }
+  .qr-section .section-intro {
+    font-family: var(--font-heading); font-size: 20px; font-weight: 600;
+    color: var(--heading-color); letter-spacing: 3px; margin-bottom: 12px;
+    transition: color 0.5s;
+  }
+  body.theme-tech .qr-section .section-intro {
+    background: linear-gradient(135deg, #E8ECF4, #93C5FD);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .qr-section .section-note {
+    font-size: 12px; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 36px;
+    transition: color 0.5s;
+  }
+  .qr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .qr-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--card-radius); padding: 40px 28px 32px;
+    position: relative; transition: all 0.35s ease; box-shadow: var(--shadow-soft);
+  }
+  .qr-card:hover {
+    transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: var(--border-hover);
+  }
+  .qr-card::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.4; transition: background 0.5s;
+  }
+  body.theme-tech .qr-card::before { background: var(--gold); opacity: 0.6; }
+  .qr-card .qr-label {
+    font-family: var(--font-heading); font-size: 16px; font-weight: 600;
+    color: var(--heading-color); margin-bottom: 6px; letter-spacing: 2px;
+    transition: color 0.5s;
+  }
+  .qr-card .qr-desc {
+    font-size: 12px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 24px;
+    transition: color 0.5s;
+  }
+  .qr-card .qr-img-wrap {
+    width: 176px; height: 176px; margin: 0 auto;
+    border: 1px solid var(--border); padding: 8px; background: #fff;
+    box-shadow: 0 2px 12px rgba(45, 36, 24, 0.06); transition: transform 0.3s;
+  }
+  .qr-card:hover .qr-img-wrap { transform: scale(1.03); }
+  .qr-card .qr-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  /* ═══ 页脚 ═══ */
+  .footer {
+    text-align: center; margin-top: 12px; padding-top: 36px; position: relative;
+  }
+  .footer::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    transition: background 0.5s;
+  }
+  .footer p {
+    font-family: var(--font-heading); font-size: 12px; color: var(--text-muted);
+    line-height: 2.4; letter-spacing: 1px; transition: color 0.5s;
+  }
+  .footer-cn { display: none; } body:not(.theme-tech) .footer-cn { display: block; }
+  .footer-tech { display: none; } body.theme-tech .footer-tech { display: block; }
+
+  /* ═══ 侧边栏 ═══ */
+  .qr-sidebar {
+    position: fixed; top: 0; right: -340px; width: 340px; height: 100vh;
+    z-index: 150; background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    box-shadow: -4px 0 40px rgba(0, 0, 0, 0.08);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s, border-color 0.5s;
+    overflow-y: auto; display: flex; flex-direction: column;
+  }
+  body.sidebar-open .qr-sidebar { right: 0; }
+  body.theme-tech .qr-sidebar { box-shadow: -4px 0 40px rgba(0, 0, 0, 0.3); }
+  .qr-sidebar-inner { padding: 36px 28px 40px; flex: 1; display: flex; flex-direction: column; }
+  .qr-sidebar-top { text-align: center; margin-bottom: 32px; position: relative; }
+  .qr-sidebar-top::after {
+    content: ''; display: block; width: 40px; height: 1px;
+    margin: 20px auto 0; background: var(--gold); opacity: 0.3; transition: background 0.5s;
+  }
+  .qr-sidebar .qr-sidebar-title {
+    font-family: var(--font-heading); font-size: 18px; font-weight: 700;
+    color: var(--heading-color); letter-spacing: 3px; margin-bottom: 6px; transition: color 0.5s;
+  }
+  body.theme-tech .qr-sidebar .qr-sidebar-title {
+    background: linear-gradient(135deg, #E8ECF4, #93C5FD);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .qr-sidebar .qr-sidebar-sub {
+    font-size: 11px; color: var(--text-muted); letter-spacing: 2px; transition: color 0.5s;
+  }
+  .qr-sidebar-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--card-radius); padding: 28px 20px 24px;
+    margin-bottom: 20px; text-align: center;
+    transition: all 0.35s ease; box-shadow: var(--shadow-soft);
+  }
+  .qr-sidebar-card:last-child { margin-bottom: 0; }
+  .qr-sidebar-card:hover { box-shadow: var(--shadow-hover); border-color: var(--border-hover); }
+  .qr-sidebar-card .qr-label {
+    font-family: var(--font-heading); font-size: 15px; font-weight: 600;
+    color: var(--heading-color); margin-bottom: 4px; letter-spacing: 1.5px; transition: color 0.5s;
+  }
+  .qr-sidebar-card .qr-desc {
+    font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 18px; transition: color 0.5s;
+  }
+  .qr-sidebar-card .qr-img-wrap {
+    width: 160px; height: 160px; margin: 0 auto;
+    border: 1px solid var(--border); padding: 6px; background: #fff;
+    box-shadow: 0 2px 12px rgba(45, 36, 24, 0.05);
+    transition: border-color 0.5s, transform 0.3s;
+  }
+  .qr-sidebar-card:hover .qr-img-wrap { transform: scale(1.04); }
+  .qr-sidebar-card .qr-img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .qr-sidebar-footer { text-align: center; margin-top: auto; padding-top: 24px; }
+  .qr-sidebar-footer .waic-logo-small {
+    font-family: var(--font-heading); font-size: 11px; color: var(--text-muted);
+    letter-spacing: 2px; transition: color 0.5s;
+  }
+
+  /* 侧边栏开关 */
+  .sidebar-toggle {
+    position: fixed; top: 50%; right: 0; transform: translateY(-50%);
+    z-index: 160; width: 40px; height: 116px;
+    background: var(--bg-card); border: 1px solid var(--border); border-right: none;
+    border-radius: 8px 0 0 8px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; box-shadow: var(--shadow-soft);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s;
+    font-family: var(--font-heading);
+    font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 2px;
+    user-select: none; animation: sidebarPulse 2.5s ease-in-out infinite;
+  }
+  .sidebar-toggle .toggle-text {
+    writing-mode: vertical-rl; text-orientation: upright;
+  }
+  @keyframes sidebarPulse {
+    0%, 100% { box-shadow: var(--shadow-soft); }
+    50% { box-shadow: 0 0 20px rgba(179, 58, 58, 0.12); }
+  }
+  body.theme-tech .sidebar-toggle {
+    animation: sidebarPulseTech 2.5s ease-in-out infinite;
+  }
+  @keyframes sidebarPulseTech {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+  }
+  body.sidebar-open .sidebar-toggle { right: 340px; }
+  .sidebar-toggle:hover { border-color: var(--border-hover); box-shadow: var(--shadow-card); }
+  .sidebar-toggle .toggle-icon { font-size: 16px; font-weight: 700; transition: transform 0.3s; }
+  body.sidebar-open .sidebar-toggle .toggle-icon { transform: rotate(180deg); }
+
+  /* 遮罩 */
+  .overlay {
+    position: fixed; inset: 0; z-index: 140;
+    background: rgba(0, 0, 0, 0.2); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  body.sidebar-open .overlay { opacity: 1; pointer-events: auto; }
+
+  /* ═══ 卡片 3D 倾斜容器 ═══ */
+  .card.tilt-active { perspective: 1200px; }
+  .card.tilt-active .card-inner {
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+  }
+
+  /* ═══ 响应式 ═══ */
+  @media (max-width: 768px) {
+    .container { padding: 40px 18px 60px; }
+    .waic-banner { padding: 22px 20px 20px; margin-bottom: 28px; }
+    .waic-banner .waic-main { font-size: 24px; letter-spacing: 4px; }
+    .hero h1 { font-size: 32px; letter-spacing: 3px; }
+    body:not(.theme-tech) .hero h1 { letter-spacing: 6px; }
+    .stats { gap: 24px; }
+    .stat { min-width: 72px; }
+    .stat .num { font-size: 24px; }
+    .card-inner { flex-direction: column; }
+    .card-visual { width: 100%; min-height: 200px; max-height: 240px; border-right: none; border-bottom: 1px solid var(--border); }
+    .card-content { padding: 24px 22px 28px; }
+    .card-content h2 { font-size: 18px; }
+    .qr-grid { grid-template-columns: 1fr; gap: 20px; }
+    .qr-card { padding: 32px 20px 28px; }
+    .qr-card .qr-img-wrap { width: 156px; height: 156px; }
+    body.sidebar-open { margin-right: 0; }
+    .qr-sidebar { width: 300px; right: -300px; }
+    body.sidebar-open .sidebar-toggle { right: 300px; }
+    body.sidebar-open .theme-toggle { right: 320px; }
+    .sidebar-toggle { width: 36px; height: 96px; font-size: 11px; }
+    .qr-sidebar-inner { padding: 28px 18px 32px; }
+    .qr-sidebar-card .qr-img-wrap { width: 140px; height: 140px; }
+    .brand-seal { width: 40px; height: 40px; font-size: 14px; }
+    .theme-toggle { top: 12px; right: 12px; }
+    .theme-toggle .toggle-option { padding: 5px 12px; font-size: 10px; letter-spacing: 1px; }
+    .card.tilt-active { perspective: none; }
+    .landscape-wrap { height: 180px; }
+  }
+</style>
+</head>
+<body class="theme-tech">
+
+<!-- 粒子画布 -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- 中国风山水 -->
+<div class="landscape-wrap">
+  <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F8F3EA" stop-opacity="0"/>
+        <stop offset="40%" stop-color="#EDE5D5" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#E8DDC8" stop-opacity="0.8"/>
+      </linearGradient>
+      <linearGradient id="mtFar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C5BFAA" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#B8B298" stop-opacity="0.35"/>
+      </linearGradient>
+      <linearGradient id="mtMid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#9E9882" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#8A846E" stop-opacity="0.4"/>
+      </linearGradient>
+      <linearGradient id="mtNear" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#6B6552" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#4A4536" stop-opacity="0.45"/>
+      </linearGradient>
+      <filter id="inkBlur"><feGaussianBlur stdDeviation="0.5"/></filter>
+      <filter id="mistBlur"><feGaussianBlur stdDeviation="3"/></filter>
+    </defs>
+    <!-- 天空渐变 -->
+    <rect width="1440" height="320" fill="url(#skyGrad)"/>
+    <!-- 太阳 -->
+    <circle cx="1180" cy="80" r="36" fill="#E8D5A3" opacity="0.5"/>
+    <circle cx="1180" cy="80" r="28" fill="#F0E2B8" opacity="0.6"/>
+    <!-- 远山 -->
+    <path d="M0,320 L0,200 Q60,160 120,180 Q180,140 240,170 Q300,120 360,160 Q420,130 480,150 Q540,110 600,145 Q660,125 720,140 Q780,100 840,135 Q900,115 960,130 Q1020,95 1080,125 Q1140,105 1200,120 Q1260,90 1320,115 Q1380,100 1440,120 L1440,320Z" fill="url(#mtFar)" filter="url(#inkBlur)"/>
+    <!-- 中景山 -->
+    <path d="M0,320 L0,250 Q80,210 160,230 Q240,190 320,220 Q400,180 480,210 Q560,170 640,200 Q720,160 800,195 Q880,170 960,190 Q1040,155 1120,185 Q1200,165 1280,180 Q1360,150 1440,175 L1440,320Z" fill="url(#mtMid)" filter="url(#inkBlur)"/>
+    <!-- 近景山 -->
+    <path d="M0,320 L0,290 Q70,270 140,285 Q220,255 300,275 Q380,250 460,270 Q540,240 620,265 Q700,245 780,260 Q860,235 940,258 Q1020,240 1100,255 Q1180,230 1260,250 Q1340,235 1440,255 L1440,320Z" fill="url(#mtNear)" filter="url(#inkBlur)"/>
+    <!-- 雾气层1-->
+    <rect x="-100" y="140" width="400" height="40" rx="20" fill="#F8F3EA" opacity="0.25" filter="url(#mistBlur)">
+      <animate attributeName="x" values="-100;1540" dur="30s" repeatCount="indefinite"/>
+    </rect>
+    <!-- 雾气层2 -->
+    <rect x="500" y="170" width="500" height="50" rx="25" fill="#F8F3EA" opacity="0.3" filter="url(#mistBlur)">
+      <animate attributeName="x" values="500;-600" dur="40s" repeatCount="indefinite"/>
+    </rect>
+    <!-- 雾气层3 -->
+    <rect x="200" y="200" width="350" height="35" rx="18" fill="#F8F3EA" opacity="0.2" filter="url(#mistBlur)">
+      <animate attributeName="x" values="200;1640" dur="35s" repeatCount="indefinite"/>
+    </rect>
+    <!-- 飞鸟1 -->
+    <g fill="none" stroke="#6B6552" stroke-width="1" opacity="0.45">
+      <path d="M200,90 Q205,82 210,88 Q215,82 220,90">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-60,-15;-120,-5" dur="18s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- 飞鸟2 -->
+    <g fill="none" stroke="#8A846E" stroke-width="0.8" opacity="0.4">
+      <path d="M700,60 Q704,54 708,59 Q712,54 716,60">
+        <animateTransform attributeName="transform" type="translate" values="0,0;80,-10;160,-3" dur="22s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- 飞鸟3 -->
+    <g fill="none" stroke="#6B6552" stroke-width="0.7" opacity="0.35">
+      <path d="M500,75 Q503,70 506,75 Q509,70 512,75">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-50,-20;-100,-8" dur="25s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- 松树剪影 -->
+    <g opacity="0.3">
+      <rect x="100" y="255" width="3" height="35" fill="#4A4536"/>
+      <path d="M101,250 L85,275 L117,275Z" fill="#4A4536"/>
+      <path d="M101,240 L88,262 L114,262Z" fill="#4A4536"/>
+      <path d="M101,232 L90,252 L112,252Z" fill="#4A4536"/>
+    </g>
+  </svg>
+</div>
+
+<!-- 遮罩 -->
+<div class="overlay" onclick="closeSidebar()"></div>
+
+<!-- 侧边栏开关 -->
+<div class="sidebar-toggle" onclick="toggleSidebar()" title="加入社群">
+  <span class="toggle-icon">◀</span>
+  <span class="toggle-text">扫码入群</span>
+</div>
+
+<!-- 侧边栏 -->
+<div class="qr-sidebar">
+  <div class="qr-sidebar-inner">
+    <div class="qr-sidebar-top">
+      <div class="qr-sidebar-title">加入热 AI 实验室</div>
+      <div class="qr-sidebar-sub">WAIC 2026 世界人工智能大会</div>
+    </div>
+    <div class="qr-sidebar-card">
+      <div class="qr-label">社区交流群</div>
+      <div class="qr-desc">扫码加入 WAIC 2026 交流讨论</div>
+      <div class="qr-img-wrap"><img src="qr-community.png" alt="热 AI 实验室社区群二维码"></div>
+    </div>
+    <div class="qr-sidebar-card">
+      <div class="qr-label">运营负责人</div>
+      <div class="qr-desc">添加微信了解更多活动信息</div>
+      <div class="qr-img-wrap"><img src="qr-contact.png" alt="运营负责人微信二维码"></div>
+    </div>
+    <div class="qr-sidebar-footer"><div class="waic-logo-small">热 AI 实验室 · WAIC 2026</div></div>
+  </div>
+</div>
+
+<!-- 主题切换 -->
+<div class="theme-toggle" onclick="toggleTheme()">
+  <span class="toggle-option" data-theme="cn">中国风</span>
+  <span class="toggle-option active" data-theme="tech">科技风</span>
+</div>
+
+<div class="container">
+
+  <!-- WAIC 大会横幅 -->
+  <div class="waic-banner">
+    <div class="waic-sub">二〇二六 · 上海世博 / 张江 / 西岸</div>
+    <div class="waic-main">WAIC 2026</div>
+    <div class="waic-info">世界人工智能大会 · 三地四馆联动 · 展区逾十万平方米</div>
+  </div>
+
+  <!-- 品牌标识 -->
+  <div class="brand-bar">
+    <div class="brand-mark">
+      <div class="brand-seal">热<br>AI</div>
+      <div class="brand-name">热 AI 实验室</div>
+    </div>
+  </div>
+
+  <!-- 主标题 -->
+  <div class="hero">
+    <h1>十大镇馆之宝</h1>
+    <p class="subtitle">
+      七月十七日至二十日 · 千余家企业参展<br>
+      三千余件展品 · 逾三百款全球首发
+    </p>
+  </div>
+
+  <!-- 数据 · 中国风 -->
+  <div class="stats-wrap stats-cn">
+    <div class="stats">
+      <div class="stat"><div class="num">拾</div><div class="label">镇馆之宝</div></div>
+      <div class="stat"><div class="num">十万</div><div class="label">展区面积 · ㎡</div></div>
+      <div class="stat"><div class="num">千一百</div><div class="label">参展企业</div></div>
+      <div class="stat"><div class="num">三百余</div><div class="label">全球首发</div></div>
+    </div>
+  </div>
+
+  <!-- 数据 · 科技风 -->
+  <div class="stats-wrap stats-tech">
+    <div class="stats">
+      <div class="stat"><div class="num">10</div><div class="label">镇馆之宝</div></div>
+      <div class="stat"><div class="num">10万㎡</div><div class="label">展览面积</div></div>
+      <div class="stat"><div class="num">1,100+</div><div class="label">参展企业</div></div>
+      <div class="stat"><div class="num">300+</div><div class="label">全球首发</div></div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="line"></div>
+    <span class="sd-cn">展 陈 珍 宝</span>
+    <span class="sd-tech">SHOWCASE</span>
+    <div class="line"></div>
+  </div>
+
+  <!-- 1 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-2814123934-FD9F228D8948F841B6049369A69FF49F/0?fmt=png&size=695&h=664&w=1000&ppv=1" alt="曙光8000 全国产十万卡AI超集群" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">壹</div><div class="card-rank">1</div>
+        <h2>曙光八千"登峰"<span class="tag-seal tag-indigo">算力基石</span><span class="tag-chip chip-hardware">算力基础设施</span></h2>
+        <div class="company">中科曙光</div>
+        <div class="desc">
+          <p>全国产 <span class="highlight">十万卡级</span> AI 超算集群，超智融合，支持 FP64 至 INT8 全精度，覆盖科学计算、大模型训练、工业仿真等场景。</p>
+          <p>芯片至服务 <span class="highlight">全链路全自研</span>，已完成三百余项应用优化，接入国家超算互联网全面开放。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-505334022-16DE6D6315B57C5259EE320EBA011DCE/0?fmt=png&size=858&h=563&w=1000&ppv=1" alt="蚂蚁集团 机器人智慧药房" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">贰</div><div class="card-rank">2</div>
+        <h2>机器智慧药房<span class="tag-seal tag-jade">具身智能</span><span class="tag-chip chip-robot">具身智能</span></h2>
+        <div class="company">蚂蚁集团</div>
+        <div class="desc">
+          <p>部署 <span class="highlight">三台不同构型机器人</span>，统一搭载灵波跨本体具身基座模型 LingBot-VLA，协作完成接单、取药、打包全流程。</p>
+          <p>联动线上问诊，问诊—购药—处方流转—取药—打包完整闭环， <span class="highlight">九十秒内</span> 一步到位。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-3139840458-6FD630BC3D9B5D298E6D46AF782D38C6/0?fmt=png&size=399&h=563&w=1000&ppv=1" alt="智元 远征A3 Ultra 人形机器人" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">叁</div><div class="card-rank">3</div>
+        <h2>远征 A3 Ultra<span class="tag-seal tag-jade">具身智能</span><span class="tag-chip chip-robot">具身智能</span></h2>
+        <div class="company">智元</div>
+        <div class="desc">
+          <p><span class="highlight">全球首个可量产</span> 商用全尺寸人形机器人，身高一百七十四厘米，三六〇度视觉融合激光雷达感知，自研三层异构计算架构。</p>
+          <p>高阶灵巧手，厘米级融合定位， <span class="highlight">千台级量产验证</span>，支持七日二十四时连续运行。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-3210738318-171D02EBCC2C79EBBECA0C8C7D2D6D3E/0?fmt=png&size=576&h=750&w=1000&ppv=1" alt="百度搭子 通用办公智能体" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">肆</div><div class="card-rank">4</div>
+        <h2>百度搭子<span class="tag-seal tag-celadon">AI 智能体</span><span class="tag-chip chip-agent">AI 智能体</span></h2>
+        <div class="company">百度</div>
+        <div class="desc">
+          <p>通用任务型智能体， <span class="highlight">自主承接完整工作任务</span>。自然语言下达需求，自动拆解、调用工具，独立完成文档、检索、分析与报告撰写。</p>
+          <p>在 PinchBench、DeepResearch Bench 等国际权威评测中领先。已覆盖办公、搜索、创作等场景。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-631855833-2C815DA140BEDE502D27C76CCA27D6E5/0?fmt=png&size=94&h=563&w=1000&ppv=1" alt="科大讯飞 AI眼镜" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">伍</div><div class="card-rank">5</div>
+        <h2>讯飞 AI 眼镜<span class="tag-seal tag-gold">智能终端</span><span class="tag-chip chip-device">智能终端</span></h2>
+        <div class="company">科大讯飞</div>
+        <div class="desc">
+          <p>多模态识别与实时翻译，整机仅 <span class="highlight">四十克</span>，全天候佩戴。首创唇动识别多模态降噪，嘈杂环境精准锁定发言人。</p>
+          <p>集实时同声传译、大屏提词、随身 AI 助理于一体，硬件感知—多模态理解—跨场景服务的能力闭环。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-2229119063-EF931EDC39426D62CE4D100598F11803/0?fmt=png&size=484&h=565&w=1000&ppv=1" alt="南方电网 大瓦特·云睿 配电网规划智能体" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">陆</div><div class="card-rank">6</div>
+        <h2>大瓦特·云睿<span class="tag-seal tag-ochre">行业 AI</span><span class="tag-chip chip-energy">行业 AI</span></h2>
+        <div class="company">中国南方电网</div>
+        <div class="desc">
+          <p>面向新型电力系统的 <span class="highlight">原生 AI 智能体</span>，复刻专业规划逻辑，自主完成故障诊断、方案生成、仿真校验、投资测算与报告编制。</p>
+          <p>构建全景认知—推理决策—技能执行—仿真进化闭环，已支撑 <span class="highlight">逾万条馈线</span> 的智能诊断与数千规划方案生成。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-2226803551-A8E1D41CD18044B2D4150BE065BEBFF6/0?fmt=png&size=228&h=328&w=1000&ppv=1" alt="阶跃星辰 STEPX Neo 智能体原生手机" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">柒</div><div class="card-rank">7</div>
+        <h2>STEPX Neo<span class="tag-seal tag-gold">智能终端</span><span class="tag-chip chip-device">智能终端</span></h2>
+        <div class="company">阶跃星辰</div>
+        <div class="desc">
+          <p>国内首款通过《人工智能终端智能化分级》<span class="highlight">L3 级</span> 国标检测的智能体手机，当前唯一获 L3 级认证。</p>
+          <p>搭载全球首个智能体原生操作系统 Step AOS，内置自研终端智能体阶跃 Amoo，"模型·软件·硬件"三位一体。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-1293973379-AD3D415346661396FC3DDCEC4B3B8B42/0?fmt=png&size=569&h=563&w=1000&ppv=1" alt="阿里云 真武M890 × 磐久AL128超节点" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">捌</div><div class="card-rank">8</div>
+        <h2>真武 M890 · 磐久 AL128<span class="tag-seal tag-indigo">算力基石</span><span class="tag-chip chip-hardware">算力基础设施</span></h2>
+        <div class="company">阿里云</div>
+        <div class="desc">
+          <p>真武 M890 单卡 <span class="highlight">百四十四 GB 显存</span>，片间互联八百 GB/s，原生支持 FP32 至 FP4 精度；AL128 单柜集成 <span class="highlight">百二十八张算力卡</span>。</p>
+          <p>正交无缆架构配合 ALink 互联，千万亿比特级带宽、百纳秒级延迟，面向智能体时代的核心硬件底座。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-2578485556-E8EF17E2DED7982AD4A38652BC444F17/0?fmt=png&size=367&h=562&w=1000&ppv=1" alt="天鹜科技 晓鹜 对话式蛋白质设计智能体" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">玖</div><div class="card-rank">9</div>
+        <h2>晓鹜<span class="tag-seal tag-rust">AI 为科学</span><span class="tag-chip chip-bio">AI for Science</span></h2>
+        <div class="company">天鹜科技</div>
+        <div class="desc">
+          <p>以智能体为中心的蛋白质设计平台。自然语言描述，AI 设计序列，联动自动化实验室完成实验，数据回流持续迭代——"设计—实验—反馈"干湿闭环。</p>
+          <p>研发周期由 <span class="highlight">二至五年压缩至二至六个月</span>，实验量从数万降至约百次。累计四十余成功项目，服务逾五十家企业。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card">
+    <div class="card-inner">
+      <div class="card-visual">
+        <img src="http://qqpublic.qpic.cn/qq_public/0/28-2684509418-CD6D553C9D845A38E8494EC94DF333DD/0?fmt=png&size=711&h=563&w=1000&ppv=1" alt="中兴通讯 OEX超节点 智算设备" loading="lazy">
+      </div>
+      <div class="card-content">
+        <div class="card-seal">拾</div><div class="card-rank">10</div>
+        <h2>OEX 超节点<span class="tag-seal tag-indigo">算力基石</span><span class="tag-chip chip-hardware">算力基础设施</span></h2>
+        <div class="company">中兴通讯</div>
+        <div class="desc">
+          <p><span class="highlight">多芯协同</span>，开放解耦，释放多元算力集群效应；<span class="highlight">正交无背板架构</span>，零线缆互联，成本降低八成。</p>
+          <p>集结"算力集装箱"理念，芯片、算法、整机、集群、软件及 IDC 系统级协同，全链路商业闭环。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部二维码 -->
+  <div class="qr-section">
+    <div class="section-intro">加入热 AI 实验室</div>
+    <div class="section-note">—— 二〇二六世界人工智能大会交流群 ——</div>
+    <div class="qr-grid">
+      <div class="qr-card">
+        <div class="qr-label">热 AI 实验室 · 社区群</div>
+        <div class="qr-desc">扫码加入 WAIC 2026 交流讨论</div>
+        <div class="qr-img-wrap"><img src="qr-community.png" alt="热 AI 实验室社区群二维码"></div>
+      </div>
+      <div class="qr-card">
+        <div class="qr-label">运营负责人</div>
+        <div class="qr-desc">添加微信了解更多活动信息</div>
+        <div class="qr-img-wrap"><img src="qr-contact.png" alt="运营负责人微信二维码"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-cn">
+      <p>热 AI 实验室 出品</p>
+      <p>财联社 / 澎湃新闻 / 太平洋科技报道 · 排名不分先后</p>
+      <p style="font-size:14px;color:var(--heading-color);font-weight:600;letter-spacing:3px;margin-top:8px;">二〇二六年七月十七日 · 上海</p>
+    </div>
+    <div class="footer-tech">
+      <p>图片均来自 WAIC 2026 大会组委会</p>
+      <p>整理：热 AI 实验室 · 数据来源：财联社 / 澎湃新闻 / 太平洋科技报道</p>
+      <p>WAIC 2026 世界人工智能大会 · 排名不分先后 · 2026年7月17日</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   粒子系统
+   ═══════════════════════════════════════ */
+(function(){
+  var canvas = document.getElementById('particle-canvas');
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var w, h;
+  var isCN = true;
+  var mouseX = -1000, mouseY = -1000;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = document.body.scrollHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  document.addEventListener('mousemove', function(e){ mouseX = e.clientX; mouseY = e.clientY; });
+
+  function createParticles(count, theme) {
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: theme === 'cn' ? Math.random() * 1.8 + 0.5 : Math.random() * 2 + 0.5,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.1 - 0.03,
+        o: Math.random() * 0.6 + 0.1,
+        pulse: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  createParticles(window.innerWidth < 768 ? 40 : 80, 'cn');
+
+  function drawParticles(theme) {
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      // 靠近鼠标时微偏
+      var dx = p.x - mouseX, dy = p.y - mouseY;
+      var dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 150 && dist > 0) {
+        p.vx += (dx / dist) * 0.03;
+        p.vy += (dy / dist) * 0.03;
+      }
+      // 速度衰减
+      p.vx *= 0.998; p.vy *= 0.998;
+
+      p.x += p.vx; p.y += p.vy;
+
+      // 边界环绕
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      if (p.y < -10) p.y = h + 10;
+      if (p.y > h + 10) p.y = -10;
+
+      p.pulse += 0.008;
+      var alpha = p.o * (0.7 + 0.3 * Math.sin(p.pulse));
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+
+      if (theme === 'cn') {
+        ctx.fillStyle = 'rgba(44,62,107,' + alpha + ')';
+      } else {
+        // 科技风：发光粒子
+        var grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+        grd.addColorStop(0, 'rgba(59,130,246,' + (alpha * 1.5) + ')');
+        grd.addColorStop(1, 'rgba(59,130,246,0)');
+        ctx.fillStyle = grd;
+      }
+      ctx.fill();
+    }
+  }
+
+  function animate() {
+    var tech = document.body.classList.contains('theme-tech');
+    var theme = tech ? 'tech' : 'cn';
+    if (theme !== (isCN ? 'cn' : 'tech')) {
+      isCN = !tech;
+      createParticles(window.innerWidth < 768 ? 40 : 80, isCN ? 'cn' : 'tech');
+    }
+    drawParticles(isCN ? 'cn' : 'tech');
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // 主题切换时重建粒子
+  var origToggle = window.toggleTheme;
+})();
+
+/* ═══════════════════════════════════════
+   卡片入场动画
+   ═══════════════════════════════════════ */
+(function(){
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.card').forEach(function(card, i){
+    card.style.transitionDelay = (i * 0.05) + 's';
+    observer.observe(card);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   卡片 3D 倾斜（桌面端）
+   ═══════════════════════════════════════ */
+(function(){
+  if (window.innerWidth < 768) return;
+
+  document.querySelectorAll('.card').forEach(function(card){
+    card.classList.add('tilt-active');
+
+    card.addEventListener('mousemove', function(e){
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var cx = rect.width / 2, cy = rect.height / 2;
+      var rx = ((y - cy) / cy) * -4;
+      var ry = ((x - cx) / cx) * 4;
+      card.querySelector('.card-inner').style.transform =
+        'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+    });
+
+    card.addEventListener('mouseleave', function(){
+      card.querySelector('.card-inner').style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  });
+})();
+
+/* ═══════════════════════════════════════
+   主题切换
+   ═══════════════════════════════════════ */
+function toggleTheme() {
+  var body = document.body;
+  var toggles = document.querySelectorAll('.toggle-option');
+
+  if (body.classList.contains('theme-tech')) {
+    body.classList.remove('theme-tech');
+    toggles[0].classList.add('active');
+    toggles[1].classList.remove('active');
+    localStorage.setItem('waic-theme', 'cn');
+  } else {
+    body.classList.add('theme-tech');
+    toggles[0].classList.remove('active');
+    toggles[1].classList.add('active');
+    localStorage.setItem('waic-theme', 'tech');
+  }
+}
+
+function toggleSidebar() {
+  document.body.classList.toggle('sidebar-open');
+}
+
+function closeSidebar() {
+  document.body.classList.remove('sidebar-open');
+}
+
+// 记忆
+(function() {
+  var saved = localStorage.getItem('waic-theme');
+  // 默认科技风；若用户之前选择过中国风，则切换
+  if (saved === 'cn') {
+    document.body.classList.remove('theme-tech');
+    document.querySelectorAll('.toggle-option')[0].classList.add('active');
+    document.querySelectorAll('.toggle-option')[1].classList.remove('active');
+  }
+})();
+</script>
+</body>
+</html>

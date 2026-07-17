@@ -1,0 +1,18 @@
+# Tool metadata
+.workbuddy/
+
+# macOS
+.DS_Store
+
+# Editor/IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Local env files
+.env
+.env.local
