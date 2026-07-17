@@ -442,12 +442,148 @@
     color: var(--text-muted);
   }
 
+  /* ═══ 侧边栏二维码 ═══ */
+  .sidebar-toggle {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 160;
+    width: 40px;
+    height: 116px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, border-color 0.4s ease;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+  .sidebar-toggle:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+  .sidebar-toggle .toggle-text {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+  }
+  .sidebar-toggle .toggle-icon {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+  }
+  body.sidebar-open .sidebar-toggle .toggle-icon { transform: rotate(180deg); }
+
+  .qr-sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    z-index: 150;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    box-shadow: -4px 0 40px rgba(0, 0, 0, 0.08);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s ease, border-color 0.4s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  body.sidebar-open .qr-sidebar { right: 0; }
+  body.sidebar-open .sidebar-toggle { right: 300px; }
+  body.sidebar-open .theme-toggle { right: 320px; }
+
+  .qr-sidebar-inner {
+    padding: 32px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-sidebar-top {
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .qr-sidebar-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .qr-sidebar-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .qr-sidebar-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  .qr-sidebar-card:hover {
+    border-color: var(--border-hover);
+  }
+  .qr-sidebar-card:last-child { margin-bottom: 0; }
+  .qr-sidebar-card .label {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .qr-sidebar-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .qr-sidebar-card img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 140;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  body.sidebar-open .overlay { opacity: 1; pointer-events: auto; }
+
   @media (max-width: 640px) {
     .container { padding: 32px 20px 60px; }
     .feature-grid { grid-template-columns: 1fr; }
     .hero h1 { font-size: 32px; }
     .diagram svg { min-width: 480px; }
     .qr-grid { grid-template-columns: 1fr; }
+    body.sidebar-open { margin-right: 0; }
+    .qr-sidebar { width: 280px; right: -280px; }
+    body.sidebar-open .qr-sidebar { right: 0; }
+    body.sidebar-open .sidebar-toggle { right: 280px; }
+    .sidebar-toggle {
+      width: 36px;
+      height: 96px;
+      font-size: 11px;
+    }
+    body.sidebar-open .theme-toggle { right: 300px; }
+    .theme-toggle { top: 12px; right: 12px; }
+    .qr-sidebar-inner { padding: 24px 20px; }
+    .qr-sidebar-card img { width: 120px; height: 120px; }
   }
 
   .fade-in {
@@ -463,6 +599,35 @@
 <body data-theme="dark">
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">☀</button>
 
+  <!-- 遮罩 -->
+  <div class="overlay" onclick="closeSidebar()"></div>
+
+  <!-- 侧边栏开关 -->
+  <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="扫码入群">
+    <span class="toggle-icon">◀</span>
+    <span class="toggle-text">扫码入群</span>
+  </button>
+
+  <!-- 侧边栏 -->
+  <aside class="qr-sidebar">
+    <div class="qr-sidebar-inner">
+      <div class="qr-sidebar-top">
+        <div class="qr-sidebar-title">加入社群</div>
+        <div class="qr-sidebar-sub">热AI 实验室 · 扫码加入</div>
+      </div>
+      <div class="qr-sidebar-card">
+        <div class="label">实验室社区</div>
+        <div class="desc">扫码加入群聊</div>
+        <img src="qr-community.png" alt="热AI 实验室社区群二维码">
+      </div>
+      <div class="qr-sidebar-card">
+        <div class="label">联系运营</div>
+        <div class="desc">扫码添加微信</div>
+        <img src="qr-contact.png" alt="运营负责人微信二维码">
+      </div>
+    </div>
+  </aside>
+
   <div class="container">
     <a class="back-link" href="index.html">← 返回热AI 实验室</a>
 
@@ -476,8 +641,8 @@
       </div>
 
       <div class="hero-visual">
-        <img src="https://kimi-web-img.moonshot.cn/prod-data/online-image/search-upload/2f74be6d2e8a46cb7ab0f8a046539faa.png" alt="习近平主席出席 2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式并发表主旨讲话">
-        <div class="caption">图 1：2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式。来源：<a href="https://news.cctv.com/2026/07/17/ARTIIaUbIpufyz1sNT9ZHBpC260717.shtml" target="_blank" rel="noopener">央视网</a></div>
+        <img src="https://www.cma.gov.cn/ydyl/202507/W020250730547330052480.jpg" alt="2025 年世界人工智能大会，中国气象局发布全民早期预警中国方案“妈祖（MAZU）”，向世界气象组织代表及吉布提、蒙古两国代表移交“AI 气象预警钥匙”">
+        <div class="caption">图 1：2025 年世界人工智能大会，中国气象局发布全民早期预警中国方案“妈祖（MAZU）”，向世界气象组织代表及吉布提、蒙古两国代表移交“AI 气象预警钥匙”。来源：中国气象局</div>
       </div>
 
       <p class="subtitle" style="margin-top: 28px; margin-bottom: 0;">以「妈祖」之名，融合多源气象数据与人工智能，为台风、暴雨、强对流等灾害性天气提供分钟级、公里级、场景化的智能预警服务。</p>
@@ -493,8 +658,8 @@
       <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。<sup>[2]</sup></p>
 
       <div class="media-block fade-in">
-        <img src="https://img.36krcdn.com/hsossms/20260708/v2_eb27cfd3db8648549c3da5bc600eeae0@6381723_oswg134903oswg1080oswg421_img_000?x-oss-process=image/format,jpg/interlace,1" alt="2026 世界人工智能大会主题“智能伙伴，共创未来”">
-        <div class="media-caption">图 3：2026 世界人工智能大会主题「智能伙伴，共创未来」。来源：<a href="https://www.36kr.com/p/3886435719033092" target="_blank" rel="noopener">36氪</a></div>
+        <img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2026%2F0717%2Fa95a220cj00tib0cr00s7d000u000pnc.jpg&thumbnail=660x2147483647&quality=80&type=jpg" alt="中国气象智能预警方案“妈祖”的“菜单式供给、定制化服务”平台界面">
+        <div class="media-caption">图 3：中国气象智能预警方案“妈祖”的“菜单式供给、定制化服务”平台界面。来源：网易 / 中国气象局微信公号</div>
       </div>
 
       <h2>核心能力</h2>
@@ -540,8 +705,8 @@
       <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐。其设计参考了主流 AI 气象预报模型在数据融合、时空建模和不确定性量化方面的最新进展。<sup>[3][4]</sup></p>
 
       <div class="media-block fade-in">
-        <img src="https://img.ithome.com/newsuploadfiles/2026/7/6f5db600-3790-4cca-9bdc-492a5a752677.jpg@s_2,w_820,h_461" alt="“妈祖”大模型已在全球多国落地应用">
-        <div class="media-caption">图 4：据 2026 年报道，“妈祖”大模型已在全球多地落地应用，助力发展中国家跨越技术鸿沟。来源：<a href="https://www.ithome.com/0/976/742.htm" target="_blank" rel="noopener">IT之家</a></div>
+        <img src="https://images.shobserver.com/img/2024/09/16/l_CB20240916124951947004.png" alt="风云卫星云图是妈祖方案多源数据融合的重要数据来源之一">
+        <div class="media-caption">图 4：风云卫星云图是妈祖方案多源数据融合的重要数据来源之一。来源：上观新闻 / 国家卫星气象中心</div>
       </div>
 
       <div class="diagram">
@@ -675,6 +840,14 @@
       body.setAttribute('data-theme', next);
       document.querySelector('.theme-toggle').textContent = next === 'dark' ? '☀' : '☾';
       localStorage.setItem('theme', next);
+    }
+
+    function toggleSidebar() {
+      document.body.classList.toggle('sidebar-open');
+    }
+
+    function closeSidebar() {
+      document.body.classList.remove('sidebar-open');
     }
 
     (function initTheme() {
