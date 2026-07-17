@@ -1,6 +1,6 @@
-# 热 AI 实验室
+# 热AI 实验室
 
-热 AI 实验室（reai lab）的内容总集与静态门户网站。
+热AI 实验室（Hot AI Lab）的内容总集与静态门户网站。
 
 ## 仓库结构
 
@@ -18,4 +18,4 @@ reai-lab/
 - 加入社区：扫描 `qr-community.png`
 - 联系运营：扫描 `qr-contact.png`
 
-© 2026 热 AI 实验室
+© 2026 热AI 实验室
