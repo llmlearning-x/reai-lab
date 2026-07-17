@@ -16,3 +16,10 @@
 # Local env files
 .env
 .env.local
+
+# Tencent Cloud EdgeOne
+.edgeone/*
+.tef_dist/*
+
+# Playwright MCP temporary files
+.playwright-mcp/
