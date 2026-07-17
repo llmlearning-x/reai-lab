@@ -9,37 +9,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-primary: #0B0F19;
-    --bg-secondary: #111827;
-    --bg-card: rgba(255, 255, 255, 0.04);
-    --bg-card-hover: rgba(255, 255, 255, 0.08);
-    --text-primary: #F9FAFB;
-    --text-secondary: #9CA3AF;
-    --text-muted: #6B7280;
-    --accent-cyan: #22D3EE;
-    --accent-purple: #A78BFA;
-    --accent-pink: #F472B6;
-    --accent-blue: #60A5FA;
-    --gradient-hero: linear-gradient(135deg, #22D3EE 0%, #A78BFA 50%, #F472B6 100%);
-    --gradient-subtle: linear-gradient(180deg, rgba(34, 211, 238, 0.15) 0%, rgba(167, 139, 250, 0.08) 50%, transparent 100%);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.15);
-    --shadow-glow: 0 0 40px rgba(34, 211, 238, 0.15);
+    --bg-primary: #09090B;
+    --bg-card: #18181B;
+    --bg-card-hover: #27272A;
+    --text-primary: #FAFAFA;
+    --text-secondary: #A1A1AA;
+    --text-muted: #71717A;
+    --accent: #E4E4E7;
+    --accent-hover: #FFFFFF;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
     --font-display: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   [data-theme="light"] {
-    --bg-primary: #FAFBFC;
-    --bg-secondary: #FFFFFF;
-    --bg-card: rgba(255, 255, 255, 0.7);
-    --bg-card-hover: rgba(255, 255, 255, 0.95);
-    --text-primary: #111827;
-    --text-secondary: #4B5563;
-    --text-muted: #9CA3AF;
-    --border: rgba(17, 24, 39, 0.08);
-    --border-hover: rgba(17, 24, 39, 0.15);
-    --shadow-glow: 0 0 40px rgba(34, 211, 238, 0.25);
+    --bg-primary: #FAFAFA;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F4F4F5;
+    --text-primary: #18181B;
+    --text-secondary: #52525B;
+    --text-muted: #A1A1AA;
+    --accent: #18181B;
+    --accent-hover: #000000;
+    --border: rgba(0, 0, 0, 0.1);
+    --border-hover: rgba(0, 0, 0, 0.2);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,56 +48,14 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     transition: background 0.4s ease, color 0.4s ease;
-    overflow-x: hidden;
-  }
-
-  /* Background ambient glow */
-  .ambient {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-  .ambient::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    left: -10%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
-    filter: blur(80px);
-    animation: float 12s ease-in-out infinite;
-  }
-  .ambient::after {
-    content: '';
-    position: absolute;
-    bottom: -10%;
-    right: -10%;
-    width: 50%;
-    height: 50%;
-    background: radial-gradient(circle, rgba(167, 139, 250, 0.12) 0%, transparent 70%);
-    filter: blur(80px);
-    animation: float 14s ease-in-out infinite reverse;
-  }
-  [data-theme="light"] .ambient::before { background: radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, transparent 70%); }
-  [data-theme="light"] .ambient::after { background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, transparent 70%); }
-
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, -20px) scale(1.05); }
   }
 
   .container {
-    position: relative;
-    z-index: 1;
-    max-width: 920px;
+    max-width: 880px;
     margin: 0 auto;
-    padding: 48px 24px 80px;
+    padding: 64px 28px 80px;
   }
 
-  /* Theme toggle */
   .theme-toggle {
     position: fixed;
     top: 20px;
@@ -114,7 +66,6 @@
     border-radius: 50%;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    backdrop-filter: blur(20px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,11 +77,9 @@
   .theme-toggle:hover {
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
-    transform: rotate(15deg) scale(1.05);
-    box-shadow: var(--shadow-glow);
+    transform: scale(1.05);
   }
 
-  /* Hero */
   .hero {
     text-align: center;
     padding: 80px 0 64px;
@@ -147,20 +96,12 @@
     font-weight: 500;
     color: var(--text-secondary);
     margin-bottom: 28px;
-    backdrop-filter: blur(10px);
   }
   .badge-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--accent-cyan);
-    box-shadow: 0 0 12px var(--accent-cyan);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  [data-theme="light"] .badge-dot { box-shadow: 0 0 8px var(--accent-cyan); }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.2); }
+    background: var(--text-primary);
   }
   .hero h1 {
     font-family: var(--font-display);
@@ -170,11 +111,9 @@
     letter-spacing: -2px;
     margin-bottom: 24px;
   }
-  .hero h1 .gradient {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .hero h1 .outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--text-primary);
   }
   .hero p {
     font-size: 18px;
@@ -199,23 +138,20 @@
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
-    border: none;
+    border: 1px solid var(--border);
     cursor: pointer;
   }
   .btn-primary {
-    background: var(--gradient-hero);
-    color: white;
-    box-shadow: 0 4px 24px rgba(34, 211, 238, 0.3);
+    background: var(--text-primary);
+    color: var(--bg-primary);
   }
   .btn-primary:hover {
+    background: var(--accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(34, 211, 238, 0.4);
   }
   .btn-secondary {
-    background: var(--bg-card);
+    background: transparent;
     color: var(--text-primary);
-    border: 1px solid var(--border);
-    backdrop-filter: blur(10px);
   }
   .btn-secondary:hover {
     background: var(--bg-card-hover);
@@ -223,7 +159,6 @@
     transform: translateY(-2px);
   }
 
-  /* Section title */
   .section-title {
     font-family: var(--font-display);
     font-size: 14px;
@@ -240,11 +175,9 @@
     content: '';
     width: 24px;
     height: 2px;
-    border-radius: 2px;
-    background: var(--gradient-hero);
+    background: var(--text-primary);
   }
 
-  /* Post card */
   .post-list { margin-bottom: 80px; }
   .post-card {
     display: block;
@@ -253,26 +186,12 @@
     border-radius: 24px;
     padding: 32px;
     text-decoration: none;
-    backdrop-filter: blur(20px);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
   }
-  .post-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  }
-  [data-theme="light"] .post-card::before { background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent); }
   .post-card:hover {
-    transform: translateY(-4px) scale(1.01);
+    transform: translateY(-4px);
     background: var(--bg-card-hover);
     border-color: var(--border-hover);
-    box-shadow: var(--shadow-glow);
   }
   .post-card .meta {
     display: flex;
@@ -285,12 +204,12 @@
   .post-card .tag {
     padding: 4px 12px;
     border-radius: 999px;
-    background: rgba(34, 211, 238, 0.1);
-    color: var(--accent-cyan);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     font-weight: 600;
     font-size: 12px;
   }
-  [data-theme="light"] .post-card .tag { background: rgba(34, 211, 238, 0.12); }
   .post-card h3 {
     font-family: var(--font-display);
     font-size: 24px;
@@ -311,12 +230,11 @@
     margin-top: 20px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--accent-cyan);
+    color: var(--text-primary);
     transition: gap 0.3s ease;
   }
   .post-card:hover .arrow { gap: 10px; }
 
-  /* QR section */
   .qr-section { margin-bottom: 80px; }
   .qr-grid {
     display: grid;
@@ -329,13 +247,11 @@
     border-radius: 24px;
     padding: 32px;
     text-align: center;
-    backdrop-filter: blur(20px);
     transition: all 0.4s ease;
   }
   .qr-card:hover {
     background: var(--bg-card-hover);
     transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
   }
   .qr-card .label {
     font-family: var(--font-display);
@@ -355,10 +271,8 @@
     border-radius: 16px;
     background: white;
     padding: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 
-  /* Footer */
   .footer {
     text-align: center;
     padding-top: 40px;
@@ -376,14 +290,7 @@
     color: var(--text-primary);
     margin-bottom: 8px;
   }
-  .footer .gradient {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
 
-  /* Responsive */
   @media (max-width: 640px) {
     .container { padding: 32px 20px 60px; }
     .hero { padding: 60px 0 48px; }
@@ -394,7 +301,6 @@
     .qr-grid { grid-template-columns: 1fr; }
   }
 
-  /* Entrance animation */
   .fade-in {
     opacity: 0;
     transform: translateY(20px);
@@ -409,8 +315,6 @@
 </style>
 </head>
 <body data-theme="dark">
-  <div class="ambient"></div>
-
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">☀</button>
 
   <div class="container">
@@ -419,7 +323,7 @@
         <span class="badge-dot"></span>
         Hot AI Lab · 探索 · 分享 · 连接
       </div>
-      <h1>热 <span class="gradient">AI</span> 实验室</h1>
+      <h1>热 <span class="outline">AI</span> 实验室</h1>
       <p>记录人工智能领域的前沿观察、大会见闻与深度思考。把零散的灵感整理成可复用的知识片段。</p>
       <div class="hero-actions">
         <a href="#latest" class="btn btn-primary">浏览最新分享 →</a>
@@ -457,8 +361,8 @@
     </section>
 
     <footer class="footer fade-in">
-      <div class="brand">热 <span class="gradient">AI</span> 实验室</div>
-      <p>© 2026 Hot AI Lab. Powered by curiosity and EdgeOne Pages.</p>
+      <div class="brand">热 AI 实验室</div>
+      <p>© 2026 Hot AI Lab. Powered by curiosity.</p>
     </footer>
   </div>
 
