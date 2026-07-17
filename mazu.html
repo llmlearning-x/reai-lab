@@ -266,6 +266,76 @@
     letter-spacing: 1px;
   }
 
+  .media-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .media-block img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .media-block .media-caption {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .media-block .media-caption a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .media-block .media-caption a:hover {
+    color: var(--text-primary);
+  }
+
+  .video-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    margin: 32px 0;
+  }
+  .video-link:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+  }
+  .video-link .play-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .video-link .video-info {
+    flex: 1;
+  }
+  .video-link .video-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .video-link .video-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
   .references {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -441,12 +511,22 @@
         </svg>
         <div class="caption">图 1：妈祖方案可视化概念——雷达回波与城市风险点叠加</div>
       </div>
+
+      <div class="media-block fade-in">
+        <img src="https://i.guancha.cn/news/mainland/2025/07/28/20250728085503655.jpg" alt="中国气象局在 WAIC 2025 发布全民早期预警中国方案“妈祖（MAZU）”">
+        <div class="media-caption">图 2：2025 年世界人工智能大会，中国气象局发布全民早期预警中国方案“妈祖（MAZU）”。来源：<a href="https://www.guancha.cn/politics/2025_07_28_784515.shtml" target="_blank" rel="noopener">观察者网</a></div>
+      </div>
     </header>
 
     <article class="article">
       <h2>为什么叫「妈祖」</h2>
       <p>妈祖是海洋文化中的守护女神，象征预警、庇护与平安。我们将这套气象智能预警方案命名为「妈祖」，寓意以科技之力，为城市、乡村、港口、交通、能源等关键场景提供全天候的气象守护。</p>
       <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。<sup>[1]</sup></p>
+
+      <div class="media-block fade-in">
+        <img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2026%2F0717%2Fa95a220cj00tib0cr00s7d000u000pnc.jpg&thumbnail=660x2147483647&quality=80&type=jpg" alt="妈祖方案“菜单式供给、定制化服务”平台界面">
+        <div class="media-caption">图 3：妈祖方案“菜单式供给、定制化服务”平台界面。来源：<a href="https://www.163.com/dy/article/L21STDP20514R9P4.html" target="_blank" rel="noopener">网易 / 中国气象局微信公号</a></div>
+      </div>
 
       <h2>核心能力</h2>
       <div class="feature-grid">
@@ -489,6 +569,11 @@
 
       <h2>技术架构</h2>
       <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐。其设计参考了主流 AI 气象预报模型在数据融合、时空建模和不确定性量化方面的最新进展。<sup>[2][3]</sup></p>
+
+      <div class="media-block fade-in">
+        <img src="https://img.ithome.com/newsuploadfiles/2025/7/e3c5013b-7f4c-4293-8806-84f5bed86269.jpg?x-bce-process=image/format,f_auto" alt="妈祖方案发布现场">
+        <div class="media-caption">图 4：卫星云图与气象数据融合，是妈祖方案的重要数据基础。来源：<a href="https://www.ithome.com/0/870/874.htm" target="_blank" rel="noopener">IT之家</a></div>
+      </div>
 
       <div class="diagram">
         <div class="diagram-title">图 2：妈祖技术架构</div>
@@ -564,6 +649,14 @@
       <h2>未来展望</h2>
       <p>妈祖方案将持续迭代，目标从「预警」走向「预演」：在灾害发生前，结合数字孪生城市模拟不同处置策略的效果，为决策者提供「如果这样，会怎样」的推演能力。最终让每一次预警都能转化为一次有效的行动，最大限度减少生命与财产损失。</p>
 
+      <a class="video-link fade-in" href="http://www.zgqxb.com.cn/sp/sz/202507/t20250726_7236485.html" target="_blank" rel="noopener">
+        <div class="play-icon">▶</div>
+        <div class="video-info">
+          <div class="video-title">观看中国气象局“妈祖（MAZU）”发布视频</div>
+          <div class="video-meta">来源：中国气象新闻网 · 2025-07-26</div>
+        </div>
+      </a>
+
       <div class="references">
         <h3>参考资料</h3>
         <ol>
@@ -572,6 +665,11 @@
           <li>Google DeepMind. GraphCast: Learning skillful medium-range global weather forecasting. https://deepmind.google/discover/blog/graphcast-ai-model-for-faster-and-more-accurate-global-weather-forecasting/</li>
           <li>Huawei Cloud. Pangu-Weather: A 3D high-resolution model for fast and accurate weather forecasting. https://www.huaweicloud.com/product/pangu-models/pangu-weather.html</li>
           <li>国家气象信息中心. 气象数据服务. https://data.cma.cn/</li>
+          <li>中国气象局. 全民早期预警中国方案“妈祖（MAZU）”发布. https://www.cma.gov.cn/ztbd/2025zt/20250724/2025072403/202507/t20250726_7236536.html</li>
+          <li>中国气象新闻网. 中国气象局发布全民早期预警中国方案“妈祖（MAZU）”视频. http://www.zgqxb.com.cn/sp/sz/202507/t20250726_7236485.html</li>
+          <li>观察者网. 中国气象局发布全民早期预警中国方案“妈祖”. https://www.guancha.cn/politics/2025_07_28_784515.shtml</li>
+          <li>网易. 气象智能预警方案“妈祖”是什么？如何走出国门？. https://www.163.com/dy/article/L21STDP20514R9P4.html</li>
+          <li>IT之家. 中国气象局发布全民早期预警方案“妈祖（MAZU）”. https://www.ithome.com/0/870/874.htm</li>
         </ol>
       </div>
     </article>
