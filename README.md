@@ -7,6 +7,7 @@
 ```
 reai-lab/
 ├── index.html          # 门户网站首页
+├── mazu.html           # 妈祖：气象智能预警方案
 ├── waic-2026.html      # WAIC 2026 单篇文章页
 ├── qr-community.png    # 实验室社区群二维码
 ├── qr-contact.png      # 运营负责人二维码
