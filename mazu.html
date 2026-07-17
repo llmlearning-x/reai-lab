@@ -141,7 +141,7 @@
     border: 1px solid var(--border);
     background: var(--bg-card);
   }
-  .hero-visual svg {
+  .hero-visual img {
     display: block;
     width: 100%;
     height: auto;
@@ -152,6 +152,14 @@
     text-align: center;
     padding: 12px 16px;
     border-top: 1px solid var(--border);
+  }
+  .caption a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .caption a:hover {
+    color: var(--text-primary);
   }
 
   .article h2 {
@@ -459,73 +467,34 @@
     <a class="back-link" href="index.html">← 返回热AI 实验室</a>
 
     <header class="hero fade-in">
-      <div class="badge">气象 · AI · 公共安全</div>
+      <div class="badge">WAIC 2026 · 人工智能全球治理</div>
       <h1>妈祖：气象智能预警方案</h1>
-      <p class="subtitle">以「妈祖」之名，守护每一寸土地的安宁。融合多源气象数据与人工智能，为台风、暴雨、强对流等灾害性天气提供分钟级、公里级、场景化的智能预警服务。</p>
+      <p class="subtitle">2026 年 7 月 17 日，国家主席习近平在 2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式上发表主旨讲话，宣布中国推动气象智能预警方案「妈祖」在 <strong>30 个国家</strong>落地应用，以 AI 预警能力守望万家灯火、护佑四海安澜。</p>
       <div class="meta">
         <span>2026-07-17</span>
         <span>方案解读</span>
       </div>
 
       <div class="hero-visual">
-        <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
-          <rect width="720" height="240" fill="var(--bg-secondary)"/>
-          <!-- 雷达网格 -->
-          <g stroke="var(--border)" fill="none" stroke-width="1">
-            <circle cx="360" cy="120" r="30"/>
-            <circle cx="360" cy="120" r="60"/>
-            <circle cx="360" cy="120" r="90"/>
-            <circle cx="360" cy="120" r="120"/>
-            <line x1="360" y1="0" x2="360" y2="240"/>
-            <line x1="240" y1="120" x2="480" y2="120"/>
-          </g>
-          <!-- 雷达扫描线 -->
-          <line x1="360" y1="120" x2="470" y2="40" stroke="var(--text-primary)" stroke-width="1" opacity="0.6">
-            <animateTransform attributeName="transform" type="rotate" from="0 360 120" to="360 360 120" dur="8s" repeatCount="indefinite"/>
-          </line>
-          <!-- 降雨回波 -->
-          <g opacity="0.7">
-            <path d="M 420 90 Q 450 70 470 100 T 510 110" stroke="none" fill="url(#rainLight)"/>
-            <circle cx="440" cy="95" r="25" fill="url(#rainLight)"/>
-            <circle cx="480" cy="110" r="35" fill="url(#rainHeavy)"/>
-            <circle cx="520" cy="130" r="28" fill="url(#rainHeavy)"/>
-          </g>
-          <!-- 城市点 -->
-          <g fill="var(--text-primary)">
-            <circle cx="280" cy="160" r="2"/>
-            <circle cx="310" cy="170" r="2"/>
-            <circle cx="340" cy="155" r="2"/>
-            <circle cx="400" cy="175" r="2"/>
-            <circle cx="430" cy="165" r="2"/>
-          </g>
-          <defs>
-            <radialGradient id="rainLight" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.6"/>
-              <stop offset="100%" stop-color="#60A5FA" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="rainHeavy" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.7"/>
-              <stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-        </svg>
-        <div class="caption">图 1：妈祖方案可视化概念——雷达回波与城市风险点叠加</div>
+        <img src="https://kimi-web-img.moonshot.cn/prod-data/online-image/search-upload/2f74be6d2e8a46cb7ab0f8a046539faa.png" alt="习近平主席出席 2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式并发表主旨讲话">
+        <div class="caption">图 1：2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式。来源：<a href="https://news.cctv.com/2026/07/17/ARTIIaUbIpufyz1sNT9ZHBpC260717.shtml" target="_blank" rel="noopener">央视网</a></div>
       </div>
 
-      <div class="media-block fade-in">
-        <img src="https://i.guancha.cn/news/mainland/2025/07/28/20250728085503655.jpg" alt="中国气象局在 WAIC 2025 发布全民早期预警中国方案“妈祖（MAZU）”">
-        <div class="media-caption">图 2：2025 年世界人工智能大会，中国气象局发布全民早期预警中国方案“妈祖（MAZU）”。来源：<a href="https://www.guancha.cn/politics/2025_07_28_784515.shtml" target="_blank" rel="noopener">观察者网</a></div>
-      </div>
+      <p class="subtitle" style="margin-top: 28px; margin-bottom: 0;">以「妈祖」之名，融合多源气象数据与人工智能，为台风、暴雨、强对流等灾害性天气提供分钟级、公里级、场景化的智能预警服务。</p>
     </header>
 
     <article class="article">
+      <h2>从 WAIC 2026 走向世界</h2>
+      <p>2026 年 7 月 17 日，上海。第九届世界人工智能大会暨人工智能全球治理高级别会议开幕，国家主席习近平发表题为《携手构建公正合理的全球人工智能治理体系》的主旨讲话。在讲话中，习近平宣布：未来 5 年，中国将面向发展中国家提供 5000 个人工智能专题研修培训名额，面向东盟、阿盟、非盟、拉共体、上合组织、金砖国家建设国际人工智能应用合作中心，并<strong>推动气象智能预警方案「妈祖」在 30 个国家落地应用</strong>。<sup>[1]</sup></p>
+      <p>这一宣布，让「妈祖」从一项中国气象科技成果，升级为面向全球特别是发展中国家的国际公共产品。它不再只是守护一方水土的预警工具，而是成为弥合全球早期预警能力差距、应对气候变化挑战的中国方案。</p>
+
       <h2>为什么叫「妈祖」</h2>
       <p>妈祖是海洋文化中的守护女神，象征预警、庇护与平安。我们将这套气象智能预警方案命名为「妈祖」，寓意以科技之力，为城市、乡村、港口、交通、能源等关键场景提供全天候的气象守护。</p>
-      <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。<sup>[1]</sup></p>
+      <p>传统气象预警依赖单一雷达或卫星数据，存在时效滞后、空间分辨率不足、场景适配弱等问题。妈祖方案通过<strong>多源数据融合 + 大模型推理 + 行业知识库</strong>，把「看到天气」升级为「读懂风险」。<sup>[2]</sup></p>
 
       <div class="media-block fade-in">
-        <img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2026%2F0717%2Fa95a220cj00tib0cr00s7d000u000pnc.jpg&thumbnail=660x2147483647&quality=80&type=jpg" alt="妈祖方案“菜单式供给、定制化服务”平台界面">
-        <div class="media-caption">图 3：妈祖方案“菜单式供给、定制化服务”平台界面。来源：<a href="https://www.163.com/dy/article/L21STDP20514R9P4.html" target="_blank" rel="noopener">网易 / 中国气象局微信公号</a></div>
+        <img src="https://img.36krcdn.com/hsossms/20260708/v2_eb27cfd3db8648549c3da5bc600eeae0@6381723_oswg134903oswg1080oswg421_img_000?x-oss-process=image/format,jpg/interlace,1" alt="2026 世界人工智能大会主题“智能伙伴，共创未来”">
+        <div class="media-caption">图 3：2026 世界人工智能大会主题「智能伙伴，共创未来」。来源：<a href="https://www.36kr.com/p/3886435719033092" target="_blank" rel="noopener">36氪</a></div>
       </div>
 
       <h2>核心能力</h2>
@@ -568,11 +537,11 @@
       </div>
 
       <h2>技术架构</h2>
-      <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐。其设计参考了主流 AI 气象预报模型在数据融合、时空建模和不确定性量化方面的最新进展。<sup>[2][3]</sup></p>
+      <p>妈祖方案采用「云边端协同」架构，在确保低时延的同时，兼顾复杂模型推理与海量数据吞吐。其设计参考了主流 AI 气象预报模型在数据融合、时空建模和不确定性量化方面的最新进展。<sup>[3][4]</sup></p>
 
       <div class="media-block fade-in">
-        <img src="https://img.ithome.com/newsuploadfiles/2025/7/e3c5013b-7f4c-4293-8806-84f5bed86269.jpg?x-bce-process=image/format,f_auto" alt="妈祖方案发布现场">
-        <div class="media-caption">图 4：卫星云图与气象数据融合，是妈祖方案的重要数据基础。来源：<a href="https://www.ithome.com/0/870/874.htm" target="_blank" rel="noopener">IT之家</a></div>
+        <img src="https://img.ithome.com/newsuploadfiles/2026/7/6f5db600-3790-4cca-9bdc-492a5a752677.jpg@s_2,w_820,h_461" alt="“妈祖”大模型已在全球多国落地应用">
+        <div class="media-caption">图 4：据 2026 年报道，“妈祖”大模型已在全球多地落地应用，助力发展中国家跨越技术鸿沟。来源：<a href="https://www.ithome.com/0/976/742.htm" target="_blank" rel="noopener">IT之家</a></div>
       </div>
 
       <div class="diagram">
@@ -640,7 +609,7 @@
 
       <h2>典型应用场景</h2>
       <ul>
-        <li><strong>城市防汛</strong>：提前 1–2 小时锁定内涝风险点，联动排水、交管、应急部门。<sup>[4]</sup></li>
+        <li><strong>城市防汛</strong>：提前 1–2 小时锁定内涝风险点，联动排水、交管、应急部门。<sup>[5]</sup></li>
         <li><strong>海上航运</strong>：为港口调度、渔船回港、航线规划提供台风与强对流路径预测。</li>
         <li><strong>能源保供</strong>：预测光伏、风电出力波动，辅助电网调度与储能策略。</li>
         <li><strong>大型活动</strong>：为马拉松、演唱会、户外赛事提供逐小时风险窗口建议。</li>
@@ -660,6 +629,7 @@
       <div class="references">
         <h3>参考资料</h3>
         <ol>
+          <li>新华社. 习近平在 2026 世界人工智能大会暨人工智能全球治理高级别会议开幕式上的主旨讲话（全文）. https://www.news.cn/politics/leaders/20260717/72728b6f94154d63b3eaaaf9808b51eb/c.html</li>
           <li>中国气象局. 全国气象大数据云平台「天擎」. https://www.cma.gov.cn/</li>
           <li>European Centre for Medium-Range Weather Forecasts (ECMWF). Numerical Weather Prediction and Data Assimilation. https://www.ecmwf.int/</li>
           <li>Google DeepMind. GraphCast: Learning skillful medium-range global weather forecasting. https://deepmind.google/discover/blog/graphcast-ai-model-for-faster-and-more-accurate-global-weather-forecasting/</li>
@@ -669,7 +639,8 @@
           <li>中国气象新闻网. 中国气象局发布全民早期预警中国方案“妈祖（MAZU）”视频. http://www.zgqxb.com.cn/sp/sz/202507/t20250726_7236485.html</li>
           <li>观察者网. 中国气象局发布全民早期预警中国方案“妈祖”. https://www.guancha.cn/politics/2025_07_28_784515.shtml</li>
           <li>网易. 气象智能预警方案“妈祖”是什么？如何走出国门？. https://www.163.com/dy/article/L21STDP20514R9P4.html</li>
-          <li>IT之家. 中国气象局发布全民早期预警方案“妈祖（MAZU）”. https://www.ithome.com/0/870/874.htm</li>
+          <li>36氪. 新闻发布会｜智能伙伴 共创未来！WAIC 2026 即将举行并首发主题片. https://www.36kr.com/p/3886435719033092</li>
+          <li>IT之家. “妈祖”大模型落地全球，中国智慧正助力更多国家跨越技术鸿沟. https://www.ithome.com/0/976/742.htm</li>
         </ol>
       </div>
     </article>
